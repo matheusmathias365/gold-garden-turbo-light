@@ -41,97 +41,17 @@ Regra que não quebra: reconhecer a armadilha, nunca montá-la. Sem página fals
 
 Quartel — quatro casos
 
+#001 Operação Phishing · OP-001 · o olho
+Briefing, laboratório A–F, terminal SOC, 5 desafios, protocolo se você já clicou.
 
+#002 Plantão SOC · OP-002 · a pressa
+Turno de 90 segundos. Fila de recados. Arquivar: golpe / canal oficial / ignorar.
 
+#003 O QR · OP-003 · o código
+Cardápio, pedágio, PIX da mesa. Destino × carimbo. Não pague nesta tela.
 
-
-
-
-Caso
-
-
-
-Série
-
-
-
-Treina
-
-
-
-O que tem
-
-
-
-
-
-#001 Operação Phishing
-
-
-
-OP-001
-
-
-
-O olho
-
-
-
-Briefing, laboratório A–F, terminal SOC, 5 desafios, protocolo se você já clicou
-
-
-
-
-
-#002 Plantão SOC
-
-
-
-OP-002
-
-
-
-A pressa
-
-
-
-Turno de 90 segundos. Fila de recados. Arquivar: golpe / canal oficial / ignorar
-
-
-
-
-
-#003 O QR
-
-
-
-OP-003
-
-
-
-O código
-
-
-
-Cardápio, pedágio, PIX da mesa. Destino × carimbo. Não pague nesta tela
-
-
-
-
-
-#004 A voz
-
-
-
-OP-004
-
-
-
-O canal
-
-
-
-Áudio da chefe, do pai, do banco, do RH, do diretor. Ligar no ramal. Nunca transferir no susto
+#004 A voz · OP-004 · o canal
+Áudio da chefe, do pai, do banco, do RH, do diretor. Ligar no ramal. Nunca transferir no susto.
 
 Como jogar
 
