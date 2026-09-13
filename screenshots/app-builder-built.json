@@ -1,0 +1,38 @@
+{
+  "url": "http://127.0.0.1:8081/",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "Operação Phishing",
+      "hasCanvas": false,
+      "bodyTextLen": 892,
+      "bodyTextHash": "bc02fbe36bb2723241d71bf10190604cf8062b9824c879172f9e64305ab71f8f",
+      "bodyTextPrefix": "ARQUIVO CONFIDENCIAL · TREINAMENTO DE DEFESA · SEM INSTRUÇÕES DE",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-built.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "Operação Phishing",
+      "hasCanvas": false,
+      "bodyTextLen": 862,
+      "bodyTextHash": "867350f6197b693888baa425f069e9cefc3b810781a87e9cd5fd8ee7e4f3414e",
+      "bodyTextPrefix": "ARQUIVO CONFIDENCIAL · TREINAMENTO DE DEFESA · SEM INSTRUÇÕES DE",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-built-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/app-builder-built.json",
+  "divergesFromBaseline": false,
+  "baselineReasons": []
+}

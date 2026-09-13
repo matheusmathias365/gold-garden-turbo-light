@@ -1,0 +1,320 @@
+Claro. Dá para estruturar como um mini curso de conscientização sobre phishing, com estética de investigação hacker, ensinando como o ataque funciona em alto nível e, principalmente, como desvendá-lo e evitá-lo, sem fornecer instruções operacionais para atacar pessoas.
+
+Slide 1 — A MISSÃO
+
+Texto:
+
+> 🕵️ OPERAÇÃO: DESVENDAR O PHISHING
+
+Uma mensagem.
+Um clique.
+Um golpe.
+
+Você consegue descobrir a armadilha antes que seja tarde?
+
+
+
+Visual: fundo preto, terminal hacker desfocado, linhas de código, efeito de investigação, “ARQUIVO CONFIDENCIAL”.
+
+
+---
+
+Slide 2 — O QUE É PHISHING?
+
+Texto:
+
+> 🎣 PHISHING
+
+É uma tentativa de enganar alguém para obter informações, dinheiro ou acesso a contas.
+
+O criminoso geralmente se passa por uma empresa, banco, serviço ou pessoa conhecida.
+
+O objetivo é fazer você acreditar antes de fazer você clicar.
+
+
+
+Visual: mensagem suspeita aparecendo em uma tela, com partes ocultadas como evidências.
+
+
+---
+
+Slide 3 — COMO O GOLPE FUNCIONA?
+
+Texto:
+
+> 🔎 A ESTRATÉGIA
+
+1. ISCA → uma mensagem chama sua atenção.
+2. PRESSÃO → você é incentivado a agir rapidamente.
+3. ENGANO → o criminoso imita algo confiável.
+4. CLIQUE → você é levado para uma ação.
+5. OBJETIVO → informações ou dinheiro podem ser roubados.
+
+A arma principal não é o computador. É a engenharia social.
+
+
+
+Visual: sequência de pistas conectadas por uma linha vermelha.
+
+
+---
+
+Slide 4 — A ISCA
+
+Texto:
+
+> 🎯 PISTA #01 — A ISCA
+
+“Sua conta será bloqueada.”
+
+“Pagamento pendente.”
+
+“Você ganhou um prêmio.”
+
+“Detectamos uma atividade suspeita.”
+
+“Clique agora para resolver.”
+
+Quando uma mensagem provoca medo, curiosidade ou urgência, pare.
+
+
+
+Visual: várias notificações flutuando, algumas com selo “SUSPEITO”.
+
+
+---
+
+Slide 5 — O ELEMENTO MAIS PERIGOSO: URGÊNCIA
+
+Texto:
+
+> ⚠️ PISTA #02 — PRESSÃO
+
+O golpista não quer que você pense.
+
+Ele cria uma sensação de:
+
+URGÊNCIA + MEDO + CURIOSIDADE
+
+Quanto menos tempo você tiver para analisar, maior a chance de cometer um erro.
+
+Pare. Respire. Verifique.
+
+
+
+Visual: cronômetro digital contando regressivamente.
+
+
+---
+
+Slide 6 — DESVENDANDO A MENSAGEM
+
+Texto:
+
+> 🧩 PISTA #03 — PROCURE AS INCONSISTÊNCIAS
+
+Pergunte:
+
+• Quem realmente enviou isso?
+• O endereço do remetente parece legítimo?
+• A mensagem contém erros estranhos?
+• Existe pressão para agir imediatamente?
+• O link corresponde ao serviço mencionado?
+• Estão pedindo informações que normalmente não seriam solicitadas?
+
+Uma pista isolada pode não provar nada. Várias juntas formam o padrão.
+
+
+
+Visual: mensagem ampliada com círculos vermelhos destacando inconsistências.
+
+
+---
+
+Slide 7 — O LINK É A PISTA
+
+Texto:
+
+> 🔗 PISTA #04 — NÃO CONFIE APENAS NA APARÊNCIA
+
+Uma página pode parecer exatamente igual à original.
+
+Logo, cores, botões e textos podem ser imitados.
+
+A aparência não comprova autenticidade.
+
+Antes de inserir qualquer informação, confirme se você realmente está no serviço correto.
+
+
+
+Visual: duas páginas quase idênticas lado a lado: “ORIGINAL?” × “ARMADILHA?”
+
+
+---
+
+Slide 8 — O PEDIDO SUSPEITO
+
+Texto:
+
+> 🔐 PISTA #05 — O QUE ESTÃO PEDINDO?
+
+Desconfie de solicitações inesperadas de:
+
+• Senhas
+• Códigos de autenticação
+• Dados bancários
+• Informações pessoais
+• Pagamentos
+
+Código recebido por SMS ou aplicativo não deve ser compartilhado com quem está do outro lado da conversa.
+
+
+
+Visual: cofre digital com documentos e códigos, alguns marcados como “NÃO COMPARTILHAR”.
+
+
+---
+
+Slide 9 — O TESTE DO DETETIVE
+
+Texto:
+
+> 🕵️ DESAFIO #01
+
+Você recebe:
+
+“URGENTE! Detectamos uma tentativa de acesso. Sua conta será bloqueada em 10 minutos. Clique aqui para confirmar sua identidade.”
+
+❓ Qual é a primeira coisa que você faria?
+
+A) Clicar imediatamente
+B) Responder à mensagem
+C) Verificar o aviso por um canal oficial
+D) Informar o código recebido
+
+RESPOSTA: C
+
+
+
+Visual: formato de investigação, quatro alternativas como evidências.
+
+
+---
+
+Slide 10 — COMO VERIFICAR?
+
+Texto:
+
+> 🔍 A CONTRAPROVA
+
+Recebeu uma mensagem suspeita?
+
+Não use os contatos fornecidos na própria mensagem.
+
+Acesse o aplicativo ou site oficial por conta própria e procure o aviso diretamente.
+
+Se necessário, entre em contato com a empresa usando um canal oficial.
+
+Confirme a informação fora da mensagem suspeita.
+
+
+
+Visual: lupa passando de uma mensagem suspeita para um aplicativo oficial.
+
+
+---
+
+Slide 11 — E SE EU CLIQUEI?
+
+Texto:
+
+> 🚨 PROTOCOLO DE EMERGÊNCIA
+
+Clicou em algo suspeito?
+
+1. Pare de interagir com a página.
+2. Não forneça mais informações.
+3. Se informou uma senha, altere-a imediatamente pelo serviço oficial.
+4. Ative a autenticação em dois fatores quando disponível.
+5. Monitore suas contas.
+6. Se houve pagamento ou possível fraude financeira, contate imediatamente a instituição envolvida.
+
+Agir rápido pode reduzir o impacto.
+
+
+
+Visual: tela vermelha de “INCIDENTE DETECTADO”, estilo central de operações.
+
+
+---
+
+Slide 12 — O MISTÉRIO FOI RESOLVIDO
+
+Texto:
+
+> 🧩 CASO ENCERRADO
+
+O phishing depende de uma coisa:
+
+FAZER VOCÊ CONFIAR ANTES DE VERIFICAR.
+
+A defesa começa quando você quebra o ciclo:
+
+PARAR → ANALISAR → VERIFICAR → AGIR
+
+Nem todo alerta é verdadeiro.
+Nem toda mensagem é o que parece.
+
+
+
+Visual: mural de investigação com todas as pistas conectadas.
+
+
+---
+
+Slide 13 — DESAFIO FINAL
+
+Texto:
+
+> 🕶️ VOCÊ ESTÁ PRONTO?
+
+Na próxima mensagem suspeita, encontre:
+
+🔴 A pressão
+🔴 A inconsistência
+🔴 O pedido suspeito
+🔴 A tentativa de induzir ao clique
+
+Se encontrar as quatro, você provavelmente encontrou a armadilha.
+
+🧠 Pense como um hacker.
+Defenda-se como um especialista.
+
+
+
+Visual: “CASO #001 — PHISHING” sendo carimbado como RESOLVIDO.
+
+
+---
+
+Identidade visual do curso
+
+Estilo: “Desvendando o Mistério Hacker”
+
+Fundo preto/grafite.
+
+Verde de terminal + vermelho para alertas.
+
+Tipografia monoespaçada para títulos pequenos e códigos.
+
+Efeito de CRT/scanlines discreto.
+
+Lupa, cadeados, pastas “CONFIDENCIAL”, evidências e conexões.
+
+Elementos de interface de terminal, mas sem códigos reais de ataque.
+
+Cada slide deve parecer uma nova pista de uma investigação.
+
+Pouco texto na tela, com palavras-chave grandes.
+
+Formato recomendado: 16:9 para apresentação ou 9:16 para curso em Stories/Reels.
