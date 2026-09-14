@@ -8,7 +8,7 @@ import {
 } from "@/components/phishing-attack";
 import { Btn } from "@/components/ui";
 import { PanicButton, PanicOverlay, RedGlyphTrail } from "@/components/danger-fx";
-import { cn } from "@/lib/utils";
+import { assetUrl, cn } from "@/lib/utils";
 import { sanitizeCallsign } from "@/lib/safe";
 
 const PISTAS = [
@@ -831,7 +831,7 @@ function Certificado({ reduce }: { reduce: boolean }) {
             className="overflow-hidden rounded-lg border border-accent/40 bg-bg-elevated shadow-panel transition-transform duration-150 ease-out"
           >
             <div className="relative h-48 overflow-hidden">
-              <img src="/cert-side.jpg" alt="" className="h-full w-full object-cover" />
+              <img src={assetUrl("/cert-side.jpg")} alt="" className="h-full w-full object-cover" />
               <div className="stamp-in absolute right-4 top-4 rotate-[-16deg] rounded-sm border-2 border-accent px-2 py-1 font-mono text-[10px] font-semibold tracking-[0.2em] text-accent">
                 CERTIFICADO
               </div>

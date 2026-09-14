@@ -146,6 +146,7 @@ function authPopupPlugin(): Plugin {
 // The dev server starts once `src/router.tsx` and `src/routes/` exist — see
 // AGENTS.md § "First scaffold".
 export default defineConfig(({ command, isPreview }) => ({
+  base: process.env.GITHUB_PAGES === "true" ? "/gold-garden-turbo-light/" : "/",
   server: {
     host: "0.0.0.0",
     port: 8080,
@@ -172,8 +173,17 @@ export default defineConfig(({ command, isPreview }) => ({
     // PWA head + ?install=1 tutorial page; runs before Start/Nitro.
     grokPwaPlugin(),
     tailwindcss(),
-    tanstackStart(),
-    ...(command === "build" || isPreview
+    tanstackStart(
+      process.env.GITHUB_PAGES === "true"
+        ? {
+            spa: {
+              enabled: true,
+              prerender: { outputPath: "/index.html" },
+            },
+          }
+        : {},
+    ),
+    ...(command === "build" || isPreview) && process.env.GITHUB_PAGES !== "true"
       ? [
           nitro({
             preset: "vercel",
@@ -183,7 +193,7 @@ export default defineConfig(({ command, isPreview }) => ({
             serverDir: "./server",
           }),
         ]
-      : []),
+      : [],
     viteReact(),
   ],
 }));

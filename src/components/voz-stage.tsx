@@ -16,7 +16,7 @@ import {
   type VozScene,
 } from "@/lib/voz-caso";
 import { useProgress } from "@/lib/progress";
-import { cn } from "@/lib/utils";
+import { assetUrl, cn } from "@/lib/utils";
 
 export function VozCase({ sceneId }: { sceneId?: string }) {
   const scene = sceneId ? vozById(sceneId) : null;
@@ -279,7 +279,7 @@ function VozSceneView({ scene }: { scene: VozScene }) {
             {scene.files.map((src) => (
               <source
                 key={src}
-                src={src}
+                src={assetUrl(src)}
                 type={src.endsWith(".wav") ? "audio/wav" : "audio/mpeg"}
               />
             ))}

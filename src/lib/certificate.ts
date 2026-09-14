@@ -1,4 +1,5 @@
 import { safeFilePart, sanitizeCallsign } from "@/lib/safe";
+import { assetUrl } from "@/lib/utils";
 
 export function certSerial(callsign: string, series = "001") {
   const key = sanitizeCallsign(callsign) || "AGENTE";
@@ -39,7 +40,7 @@ async function loadSideArt(): Promise<HTMLImageElement | null> {
     const img = new Image();
     img.onload = () => resolve(img);
     img.onerror = () => resolve(null);
-    img.src = "/cert-side.jpg";
+    img.src = assetUrl("/cert-side.jpg");
   });
 }
 

@@ -1,274 +1,140 @@
-# 🕵️ Operação Phishing
+# Operação Phishing
 
-> **Você já ia clicar. Agora você treina.**
+**Você já ia clicar. Agora você treina.**
 
-**Operação Phishing** é um jogo-treino online de conscientização em cibersegurança, desenvolvido para ensinar, de forma interativa, como reconhecer tentativas de **phishing** em diferentes canais: SMS, e-mail, PIX, QR Code e voz.
+Jogo-treino online de cibersegurança. Mini curso interativo para reconhecer phishing — SMS, e-mail, PIX, QR e voz — sem montar golpe nenhum.
 
-A proposta é simples:
+Jogo no navegador. Sem caixa. Sem envio. Sem cadastro.
 
-**Uma mensagem. Um clique. Um golpe.**
+**Jogar agora:** [matheusmathias365.github.io/gold-garden-turbo-light](https://matheusmathias365.github.io/gold-garden-turbo-light/)
 
-Aqui, você aprende a identificar a armadilha **sem construir, executar ou distribuir nenhum golpe real.**
-
-> 🎮 Jogo diretamente no navegador
-> 🔒 Sem cadastro
-> 📵 Sem envio de dados
-> 🧪 Simulação 100% educacional
+![Operação Phishing](public/og.jpg)
 
 ---
 
-## ⚠️ Aviso legal e educacional
+## Por que o GitHub mostrou o README e não o site
 
-Este projeto é um **material de treinamento exclusivamente educacional**.
+O GitHub Pages, se ligado em **Deploy from a branch** (pasta raiz do `main`), procura um `index.html` na raiz. Este repositório é o **código-fonte**. Na raiz só existe o README — então o GitHub mostra o README.
 
-Seu conteúdo não apoia, não ensina, não incentiva e não autoriza qualquer prática ilegal ou criminosa.
+O jogo precisa ser **compilado**. O workflow `GitHub Pages` faz isso. Troque a origem:
 
-**Phishing é crime.** Qualquer tentativa de utilizar os conhecimentos ou materiais deste projeto para realizar ataques, fraudes ou obter dados de terceiros será de responsabilidade exclusiva de quem praticar a conduta.
+1. Abra o repositório no GitHub.
+2. **Settings** (aba de cima).
+3. No menu esquerdo: **Pages**.
+4. Em **Build and deployment** → **Source**, escolha **GitHub Actions**.
+   - Não deixe **Deploy from a branch**.
+5. Se o GitHub pedir para aceitar o ambiente `github-pages`, aceite.
+6. Abra a aba **Actions**. Espere o workflow **GitHub Pages** ficar verde.
+   - Se não rodou sozinho: **Actions** → **GitHub Pages** → **Run workflow**.
+7. Abra: [https://matheusmathias365.github.io/gold-garden-turbo-light/](https://matheusmathias365.github.io/gold-garden-turbo-light/)
 
-Entre as condutas relacionadas ao tema estão:
-
-* **Fraude eletrônica** — Código Penal, art. 171, § 2º-A, incluído pela Lei nº 14.155/2021.
-* **Invasão de dispositivo informático** — Código Penal, art. 154-A, incluído pela Lei nº 12.737/2012.
-
-> **Operação Phishing não é um órgão oficial e não possui vínculo com a Polícia Federal ou qualquer instituição governamental.**
->
-> Trata-se de uma **simulação educacional de cibersegurança**.
-
----
-
-## 🎯 O que é o Operação Phishing?
-
-Você assume o papel de um agente em treinamento e precisa investigar situações simuladas de phishing.
-
-No quartel, quatro arquivos apresentam diferentes vetores de ataque. Cada missão trabalha uma habilidade específica de identificação e prevenção.
-
-Ao concluir uma série, um **certificado digital em PNG (formato 9:16)** é gerado diretamente na tela, contendo o seu *callsign*.
-
-O certificado pode ser salvo e compartilhado.
-
-### Regra principal
-
-> **Reconhecer a armadilha. Nunca montá-la.**
-
-O projeto não fornece:
-
-* páginas falsas de bancos reais;
-* kits de phishing;
-* ferramentas de ataque;
-* instruções para clonagem de voz;
-* mecanismos para captura de credenciais;
-* métodos para execução de fraudes.
+A primeira publicação leva 1–3 minutos. Se a página ainda mostrar o README, atualize com Ctrl+F5 (cache) e confira se o Source está mesmo em GitHub Actions.
 
 ---
 
-# 🗂️ Quartel — Arquivos de treinamento
+## Aviso
 
-| Caso     | Série             | Treina      | Conteúdo                                                                   |
-| -------- | ----------------- | ----------- | -------------------------------------------------------------------------- |
-| **#001** | Operação Phishing | 👁️ O olho  | Briefing, laboratório A–F, terminal SOC, 5 desafios e protocolo pós-clique |
-| **#002** | Plantão SOC       | ⚡ A pressa  | Turno de 90 segundos, fila de recados e classificação de mensagens         |
-| **#003** | O QR              | 🔎 O código | Cardápio, pedágio e PIX simulados; análise de destino e contexto           |
-| **#004** | A Voz             | 📞 O canal  | Áudios simulados de chefe, familiar, banco, RH e diretor                   |
+Este dossiê é um material de treinamento **exclusivamente educacional**. Seu conteúdo não apoia, não ensina nem autoriza qualquer prática ilegal ou criminosa.
 
-Cada arquivo aborda um vetor diferente e trabalha a capacidade de **parar, verificar e decidir antes de clicar ou executar uma ação**.
+Phishing é crime. Qualquer tentativa ou ataque baseado neste jogo é de quem pratica:
 
----
+- **Fraude eletrônica** — Código Penal, art. 171, § 2º-A (Lei nº 14.155/2021)
+- **Invasão de dispositivo informático** — Código Penal, art. 154-A (Lei nº 12.737/2012)
 
-# 🎮 Como jogar
-
-1. Abra o site pelo navegador, no computador ou celular.
-2. Escolha um **callsign** ou continue anonimamente.
-3. Leia e aceite o aviso de uso educacional.
-4. A introdução visual é parte da experiência e pode ser ignorada.
-5. Escolha um arquivo no quartel.
-6. Analise as pistas apresentadas durante a missão.
-7. Identifique a ameaça e arquive o caso.
-8. O progresso só é registrado após o arquivamento.
-9. Ao concluir a série, o certificado digital é gerado na tela.
-
-> **Nada precisa ser enviado para concluir uma missão.**
+Não é órgão oficial. Não é da Polícia Federal. É simulação.
 
 ---
 
-# 🛡️ O que este jogo não faz
+## O que é
 
-Para manter o projeto estritamente educacional e seguro:
+Você entra como agente, sente um golpe de mentira e desmonta quatro arquivos no quartel. Cada caso treina um vetor. No fim, o certificado sai na tela (PNG 9:16) com o seu callsign — para baixar ou postar. Nada é enviado pelos Correios.
 
-* ❌ Não ensina a criar páginas falsas.
-* ❌ Não fornece kits de phishing.
-* ❌ Não ensina clonagem de voz.
-* ❌ Não utiliza logotipos reais de instituições financeiras.
-* ❌ Não solicita CPF, senha, cartão ou PIX verdadeiro.
-* ❌ Não coleta IP, câmera, microfone ou localização.
-* ❌ Não envia dados pessoais para servidores.
-* ❌ Não envia certificados físicos.
-* ❌ Não envia e-mails automaticamente.
-
-A introdução contendo frases como **“seus dados foram ranqueados”** faz parte da narrativa e é apenas uma simulação.
-
-> **Na vida real, dados podem ser utilizados como matéria-prima para golpes. Aqui, nenhum dado é vendido ou utilizado para essa finalidade.**
+Regra que não quebra: **reconhecer a armadilha, nunca montá-la.** Sem página falsa de banco real, sem kit, sem “como clonar voz”.
 
 ---
 
-# 🔐 Privacidade
+## Quartel — quatro casos
 
-O projeto foi desenvolvido com foco em **privacidade e processamento local**.
+**#001 Operação Phishing · OP-001 · o olho**  
+Briefing, laboratório A–F, terminal SOC, 5 desafios, protocolo se você já clicou.
 
-* Não é necessário criar uma conta.
-* Não há cadastro de usuário.
-* O *callsign* permanece no navegador do dispositivo.
-* O progresso é armazenado localmente.
-* Câmera, microfone e GPS não são utilizados.
-* Não há coleta de dados pessoais para execução das missões.
-* Os QR Codes utilizados no treinamento não direcionam para sites reais.
+**#002 Plantão SOC · OP-002 · a pressa**  
+Turno de 90 segundos. Fila de recados. Arquivar: golpe / canal oficial / ignorar.
 
-### Armazenamento local
+**#003 O QR · OP-003 · o código**  
+Cardápio, pedágio, PIX da mesa. Destino × carimbo. Não pague nesta tela.
 
-O progresso e as informações necessárias para a experiência permanecem no **navegador do próprio dispositivo**.
+**#004 A voz · OP-004 · o canal**  
+Áudio da chefe, do pai, do banco, do RH, do diretor. Ligar no ramal. Nunca transferir no susto.
+
+**Como jogar**
+
+1. Abre o site no navegador (celular ou computador).
+2. Callsign (ou anônimo) e o aceite: material educacional, sujeito à lei.
+3. A intro vermelha é teatro. Dá para pular. Nada é coletado.
+4. Escolhe o arquivo no quartel.
+5. Marcou a pista? **Arquiva o caso.** Sem arquivar, o progresso não conta.
+6. Fecha o caso. O diploma da série (OP-001 a OP-004) nasce na tela.
 
 ---
 
-# 💻 Executando localmente
+## O que este jogo não faz
 
-## Requisitos
+- Não ensina a montar página falsa, kit de phishing ou clonar voz.
+- Não usa logo real de banco.
+- Não pede CPF, senha, cartão ou PIX de verdade.
+- Não coleta IP, câmera, microfone nem localização. O callsign fica só no seu aparelho.
+- Não envia caixa, certificado físico nem e-mail.
 
-* [Node.js](https://nodejs.org/) **22 ou superior**
-* npm
+A intro “seus dados foram ranqueados” é teatro. Na vida real o dado vendido é o golpe. Aqui ninguém vende lote nenhum.
 
-## Instalação
+---
+
+## Privacidade
+
+- Sem cadastro, sem conta, sem servidor de dados pessoais.
+- Progresso e callsign ficam no navegador (neste aparelho).
+- Câmera, microfone e GPS estão bloqueados.
+- QR do treino não aponta para site nenhum: só um aviso de simulação.
+
+---
+
+## Rodar local
+
+Precisa de Node.js 22+ e npm.
 
 ```bash
-git clone https://github.com/SEU-USUARIO/operacao-phishing.git
-cd operacao-phishing
+git clone https://github.com/matheusmathias365/gold-garden-turbo-light.git
+cd gold-garden-turbo-light
 npm install
-```
-
-## Desenvolvimento
-
-```bash
 npm run dev
 ```
 
-Depois, abra no navegador o endereço informado pelo terminal.
-
-Por padrão, o projeto utiliza:
-
-```text
-http://localhost:8080
-```
-
-## Scripts disponíveis
+Abre o endereço que o terminal mostrar. Em geral: `http://localhost:8080`.
 
 ```bash
-npm run build
+npm run build        # build de produção
+npm run build:pages  # build estático para GitHub Pages
+npm run typecheck    # TypeScript
+npm test             # testes dos casos e da sanitização
 ```
 
-Gera o build de produção.
+---
 
-```bash
-npm run typecheck
-```
+## Stack
 
-Executa a verificação de tipos do TypeScript.
+- React + TypeScript
+- TanStack Router / Start
+- Vite
+- Tailwind CSS v4
+- Zustand (progresso local)
 
-```bash
-npm test
-```
-
-Executa os testes automatizados dos casos e das rotinas de sanitização.
+Estética: dossiê SOC — escuro, verde fósforo, carimbo confidencial. Conteúdo em PT-BR.
 
 ---
 
-# 🧰 Stack
+## Créditos
 
-O projeto utiliza:
+Criado para conscientização. Divulgação: [@mathiasmfernandes](https://instagram.com/mathiasmfernandes)
 
-* **React**
-* **TypeScript**
-* **TanStack Router / Start**
-* **Vite**
-* **Tailwind CSS v4**
-* **Zustand**
-
-### Arquitetura de experiência
-
-O projeto combina uma interface de jogo com elementos de treinamento em segurança:
-
-**Dossiê SOC · Terminal CRT · Investigação · Simulação · Aprendizado**
-
-A experiência visual utiliza uma estética de **arquivo confidencial / centro de operações de segurança**, com interface escura, verde fosforescente, elementos de terminal e referências visuais de investigação.
-
-Todo o conteúdo é apresentado em **PT-BR**.
-
----
-
-# 🎓 Certificado
-
-Ao concluir uma série, o jogador recebe um certificado digital correspondente à operação realizada.
-
-O certificado:
-
-* é gerado na própria interface;
-* utiliza formato **PNG 9:16**;
-* inclui o *callsign* informado pelo jogador;
-* pode ser salvo pelo usuário;
-* pode ser compartilhado em redes sociais.
-
-O certificado representa **conclusão de uma experiência educacional**, não uma certificação profissional ou oficial em cibersegurança.
-
----
-
-# 📚 Objetivo educacional
-
-O objetivo do projeto é desenvolver hábitos simples que podem evitar incidentes reais:
-
-> **Pare. Observe. Verifique. Só então decida.**
-
-O treinamento busca reforçar a identificação de sinais como:
-
-* urgência artificial;
-* pressão emocional;
-* remetentes suspeitos;
-* links inesperados;
-* QR Codes desconhecidos;
-* solicitações financeiras;
-* alteração de canais de contato;
-* pedidos de informação sensível;
-* mensagens que tentam impedir a verificação.
-
----
-
-# 🤝 Contribuição
-
-Contribuições voltadas à **educação, acessibilidade, usabilidade, correções e segurança do projeto** são bem-vindas.
-
-Ao contribuir, mantenha a proposta original:
-
-> **Ensinar a reconhecer ataques — não ensinar a executá-los.**
-
-Sugestões e melhorias devem preservar o caráter exclusivamente educacional da plataforma.
-
----
-
-# 📜 Licença e uso
-
-Consulte o arquivo de licença deste repositório para conhecer as condições de uso e distribuição do projeto.
-
-O conteúdo educacional não deve ser utilizado para realizar ataques, fraudes, engenharia social ou qualquer atividade ilícita.
-
----
-
-# 👤 Créditos
-
-**Operação Phishing**
-
-Projeto criado para **conscientização e treinamento em cibersegurança**.
-
-Divulgação: **@mathiasmfernandes**
-
----
-
-> **Use. Treine. Compartilhe o conhecimento.**
->
-> **Não use isto para atacar ninguém.**
-
+Use, treine, compartilhe o certificado. Não use isto para atacar ninguém.
