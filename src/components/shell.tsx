@@ -4,6 +4,7 @@ import { Fingerprint, Home } from "lucide-react";
 import { useHasHydrated, useProgress } from "@/lib/progress";
 import { ALL_IDS, countDone } from "@/lib/ids";
 import { Rail } from "@/components/ui";
+import { XpMeter } from "@/components/elo-stage";
 
 export function Splash({ label = "SINCRONIZANDO ARQUIVO" }: { label?: string }) {
   return (
@@ -75,6 +76,7 @@ export function AppHeader() {
           <span className="tabular-nums text-dim">
             {done}/{ALL_IDS.length}
           </span>
+          <XpMeter />
         </div>
       </div>
     </header>

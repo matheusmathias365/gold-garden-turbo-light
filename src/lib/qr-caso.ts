@@ -109,6 +109,19 @@ export function judgeQr(scene: QrScene, action: QrAction) {
   };
 }
 
+export function qrMiss(scene: QrScene, action: QrAction) {
+  if (action === "pagar") {
+    return "Pagar o código da tela é o golpe. A aula: mesmo com pressa, o PIX sai no canal da casa — caixa, totem, app — nunca neste QR.";
+  }
+  if (action === "oficial" && scene.correct === "recusar") {
+    return "O carimbo não salva um destino que mente. A aula: se o código aponta para outro lugar, recuse. Oficial é o caixa, não o adesivo.";
+  }
+  if (action === "recusar" && scene.correct === "oficial") {
+    return "Este destino bate com o carimbo. Recusar o canal da casa também erra. A aula: compare primeiro. Se for o mesmo, use o oficial.";
+  }
+  return "Revise destino × carimbo. Pagar neste QR nunca é o passo deste treino.";
+}
+
 export function qrCells(seed: string, n = 21): boolean[] {
   let h = 2166136261;
   for (let i = 0; i < seed.length; i++) {

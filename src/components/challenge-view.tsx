@@ -140,11 +140,20 @@ export function ChallengeView({ challenge }: { challenge: Challenge }) {
           ) : null}
         </div>
 
-        {status === "ok" ? (
-          <div className="mt-5">
-            <Callout tone="info" title="DEBRIEF" text={challenge.explain} />
-          </div>
-        ) : null}
+          {status === "bad" ? (
+            <div className="mt-5">
+              <Callout
+                tone="warn"
+                title="Aula do erro."
+                text="O que te pega quase nunca é o texto bonito. É o pedido, o relógio ou o destino do link. Volta nas pistas e emite de novo — acertar agora é treino, não prova."
+              />
+            </div>
+          ) : null}
+          {status === "ok" ? (
+            <div className="mt-5">
+              <Callout tone="info" title="DEBRIEF" text={challenge.explain} />
+            </div>
+          ) : null}
       </FilePanel>
 
       <nav className="mt-8 flex flex-wrap items-center justify-between gap-3">

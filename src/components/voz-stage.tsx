@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 import { AgentCertificate } from "@/components/certificate";
+import { ArchiveLog } from "@/components/ops-fx";
 import { Btn, Callout } from "@/components/ui";
 import {
   VOZ_ACTION_LABEL,
@@ -12,6 +13,7 @@ import {
   adjacentVoz,
   judgeVoz,
   vozById,
+  vozMiss,
   type VozAction,
   type VozScene,
 } from "@/lib/voz-caso";
@@ -83,7 +85,12 @@ function VozIndex() {
         })}
       </ul>
       {closed ? (
-        <div className="mt-10">
+        <div className="mt-10 space-y-8">
+          <ArchiveLog
+            code="OP-004"
+            title="A voz pode ser real. O canal não era."
+            nextHint="O dossiê fecha. A pista fica: ligar no ramal que você já usa. No quartel, um lacre acaba de ceder."
+          />
           <AgentCertificate
             callsign={callsign}
             ready
@@ -114,6 +121,7 @@ function VozSceneView({ scene }: { scene: VozScene }) {
   const [playing, setPlaying] = useState(false);
   const [left, setLeft] = useState(VOZ_SECONDS);
   const [status, setStatus] = useState<"idle" | "ok" | "bad">("idle");
+  const [lastAct, setLastAct] = useState<VozAction | null>(null);
   const [activeId, setActiveId] = useState(scene.id);
   const archived = completed.includes(scene.id);
   const tickRef = useRef<number | null>(null);
@@ -126,6 +134,7 @@ function VozSceneView({ scene }: { scene: VozScene }) {
     setPlaying(false);
     setLeft(VOZ_SECONDS);
     setStatus("idle");
+    setLastAct(null);
   }
 
   useEffect(() => {
@@ -133,6 +142,7 @@ function VozSceneView({ scene }: { scene: VozScene }) {
     setPlaying(false);
     setLeft(VOZ_SECONDS);
     setStatus("idle");
+    setLastAct(null);
     setHasFile(true);
     window.speechSynthesis?.cancel();
     const el = audioRef.current;
@@ -211,6 +221,7 @@ function VozSceneView({ scene }: { scene: VozScene }) {
 
   function choose(action: VozAction) {
     if (!heard || status === "ok") return;
+    setLastAct(action);
     const j = judgeVoz(scene, action);
     if (j.ok) {
       setStatus("ok");
@@ -317,10 +328,10 @@ function VozSceneView({ scene }: { scene: VozScene }) {
           <Callout tone="info" title="DEBRIEF" text={scene.debrief} />
         </div>
       ) : null}
-      {status === "bad" ? (
-        <p className="mt-3 font-mono text-xs text-danger">
-          Transferir ou passar código nunca é o passo deste treino. Olhe o canal.
-        </p>
+      {status === "bad" && lastAct ? (
+        <div className="mt-4">
+          <Callout tone="warn" title="Aula do erro." text={vozMiss(scene, lastAct)} />
+        </div>
       ) : null}
       {archived && status !== "ok" ? (
         <p className="mt-3 font-mono text-xs text-accent">Cena já arquivada.</p>

@@ -137,8 +137,9 @@ export function LabStage({ lab }: { lab: LabCase }) {
                 Arquive o caso para concluir
               </p>
               <p className="mt-1 text-sm text-muted">
-                Sem este passo o laboratório não entra no progresso nem no
-                certificado.
+                Arquivar não é “próximo”. É registrar o que você viu: o dossiê
+                fecha, a pista fica, o laboratório entra no progresso. Sem este
+                passo o certificado não conta.
               </p>
               <div className="mt-4">
                 <Btn onClick={archive}>Arquivar caso</Btn>

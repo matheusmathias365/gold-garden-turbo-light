@@ -25,6 +25,8 @@ import { Route as QrIndexRouteImport } from './routes/qr.index'
 import { Route as QrIdRouteImport } from './routes/qr.$id'
 import { Route as VozIndexRouteImport } from './routes/voz.index'
 import { Route as VozIdRouteImport } from './routes/voz.$id'
+import { Route as XIndexRouteImport } from './routes/x.index'
+import { Route as XIdRouteImport } from './routes/x.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -106,6 +108,16 @@ const VozIdRoute = VozIdRouteImport.update({
   path: '/voz/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const XIndexRoute = XIndexRouteImport.update({
+  id: '/x/',
+  path: '/x/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const XIdRoute = XIdRouteImport.update({
+  id: '/x/$id',
+  path: '/x/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -119,11 +131,13 @@ export interface FileRoutesByFullPath {
   '/lab/$id': typeof LabIdRoute
   '/qr/$id': typeof QrIdRoute
   '/voz/$id': typeof VozIdRoute
+  '/x/$id': typeof XIdRoute
   '/briefing/': typeof BriefingIndexRoute
   '/desafios/': typeof DesafiosIndexRoute
   '/lab/': typeof LabIndexRoute
   '/qr/': typeof QrIndexRoute
   '/voz/': typeof VozIndexRoute
+  '/x/': typeof XIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -137,11 +151,13 @@ export interface FileRoutesByTo {
   '/lab/$id': typeof LabIdRoute
   '/qr/$id': typeof QrIdRoute
   '/voz/$id': typeof VozIdRoute
+  '/x/$id': typeof XIdRoute
   '/briefing': typeof BriefingIndexRoute
   '/desafios': typeof DesafiosIndexRoute
   '/lab': typeof LabIndexRoute
   '/qr': typeof QrIndexRoute
   '/voz': typeof VozIndexRoute
+  '/x': typeof XIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -156,11 +172,13 @@ export interface FileRoutesById {
   '/lab/$id': typeof LabIdRoute
   '/qr/$id': typeof QrIdRoute
   '/voz/$id': typeof VozIdRoute
+  '/x/$id': typeof XIdRoute
   '/briefing/': typeof BriefingIndexRoute
   '/desafios/': typeof DesafiosIndexRoute
   '/lab/': typeof LabIndexRoute
   '/qr/': typeof QrIndexRoute
   '/voz/': typeof VozIndexRoute
+  '/x/': typeof XIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -176,11 +194,13 @@ export interface FileRouteTypes {
     | '/lab/$id'
     | '/qr/$id'
     | '/voz/$id'
+    | '/x/$id'
     | '/briefing/'
     | '/desafios/'
     | '/lab/'
     | '/qr/'
     | '/voz/'
+    | '/x/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -194,11 +214,13 @@ export interface FileRouteTypes {
     | '/lab/$id'
     | '/qr/$id'
     | '/voz/$id'
+    | '/x/$id'
     | '/briefing'
     | '/desafios'
     | '/lab'
     | '/qr'
     | '/voz'
+    | '/x'
   id:
     | '__root__'
     | '/'
@@ -212,11 +234,13 @@ export interface FileRouteTypes {
     | '/lab/$id'
     | '/qr/$id'
     | '/voz/$id'
+    | '/x/$id'
     | '/briefing/'
     | '/desafios/'
     | '/lab/'
     | '/qr/'
     | '/voz/'
+    | '/x/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -231,11 +255,13 @@ export interface RootRouteChildren {
   LabIdRoute: typeof LabIdRoute
   QrIdRoute: typeof QrIdRoute
   VozIdRoute: typeof VozIdRoute
+  XIdRoute: typeof XIdRoute
   BriefingIndexRoute: typeof BriefingIndexRoute
   DesafiosIndexRoute: typeof DesafiosIndexRoute
   LabIndexRoute: typeof LabIndexRoute
   QrIndexRoute: typeof QrIndexRoute
   VozIndexRoute: typeof VozIndexRoute
+  XIndexRoute: typeof XIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -352,6 +378,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof VozIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/x/': {
+      id: '/x/'
+      path: '/x'
+      fullPath: '/x/'
+      preLoaderRoute: typeof XIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/x/$id': {
+      id: '/x/$id'
+      path: '/x/$id'
+      fullPath: '/x/$id'
+      preLoaderRoute: typeof XIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -367,11 +407,13 @@ const rootRouteChildren: RootRouteChildren = {
   LabIdRoute: LabIdRoute,
   QrIdRoute: QrIdRoute,
   VozIdRoute: VozIdRoute,
+  XIdRoute: XIdRoute,
   BriefingIndexRoute: BriefingIndexRoute,
   DesafiosIndexRoute: DesafiosIndexRoute,
   LabIndexRoute: LabIndexRoute,
   QrIndexRoute: QrIndexRoute,
   VozIndexRoute: VozIndexRoute,
+  XIndexRoute: XIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

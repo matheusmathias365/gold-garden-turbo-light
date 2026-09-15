@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState, type MouseEvent, type ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
+import { Lock } from "lucide-react";
 import { CERT_LEGAL } from "@/lib/certificate";
 import {
   PhishingAttack,
@@ -47,6 +48,7 @@ export function Landing() {
         <Frase reduce={reduce} />
         <Pistas reduce={reduce} />
         <Dossie />
+        <Classificados />
         <Saber />
         <Depois />
         <Certificado reduce={reduce} />
@@ -69,6 +71,7 @@ function Nav() {
         <nav className="ml-auto hidden items-center gap-6 font-mono text-[10px] tracking-[0.18em] text-muted md:flex">
           <a href="#golpe" className="inline-flex min-h-11 items-center hover:text-fg">O golpe</a>
           <a href="#casos" className="inline-flex min-h-11 items-center hover:text-fg">Casos</a>
+          <a href="#lacre" className="inline-flex min-h-11 items-center hover:text-fg">Classificado</a>
           <a href="#como" className="inline-flex min-h-11 items-center hover:text-fg">Como jogar</a>
           <a href="#saber" className="inline-flex min-h-11 items-center hover:text-fg">Phishing</a>
           <a href="#faq" className="inline-flex min-h-11 items-center hover:text-fg">FAQ</a>
@@ -89,7 +92,7 @@ function TickerLand() {
         {Array.from({ length: 8 }).map((_, i) => (
           <span key={i}>
             SIMULAÇÃO AO VIVO · JOGO ONLINE · #001 OLHO · #002 PRESSA · #003 QR ·
-            #004 VOZ · PARAR → ANALISAR → VERIFICAR → AGIR
+            #004 VOZ · ARQUIVO X · CLASSIFICADO · PARAR → ANALISAR → VERIFICAR → AGIR
           </span>
         ))}
       </div>
@@ -828,6 +831,122 @@ function Dossie() {
   );
 }
 
+function Classificados() {
+  const files = [
+    { mark: "✓", code: "OPERAÇÃO #001", title: "Operação Phishing", state: "ABERTO" },
+    { mark: "✓", code: "OPERAÇÃO #002", title: "Plantão SOC", state: "ABERTO" },
+    { mark: "✓", code: "OPERAÇÃO #003", title: "O QR", state: "ABERTO" },
+    { mark: "✓", code: "OPERAÇÃO #004", title: "A voz", state: "ABERTO" },
+    { mark: "?", code: "ARQUIVO X", title: "█████████████████", state: "ACESSO RESTRITO" },
+  ];
+
+  return (
+    <section id="lacre" className="land-section scroll-mt-24">
+      <div className="mx-auto max-w-6xl px-5 py-16 md:py-28">
+        <p className="font-mono text-[10px] tracking-[0.22em] text-danger">
+          ARQUIVOS CLASSIFICADOS
+        </p>
+        <h2 className="mt-3 max-w-4xl font-display text-4xl font-semibold tracking-tight md:text-6xl">
+          Existe um arquivo que você ainda não viu.
+        </h2>
+        <p className="mt-5 max-w-xl text-sm leading-relaxed text-muted">
+          Algumas investigações não aparecem no início. O conteúdo permanece
+          classificado. O requisito também.
+        </p>
+
+        <div className="mt-12 grid gap-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:items-start">
+          <div className="overflow-hidden rounded-lg border border-danger/35 bg-bg-elevated shadow-panel">
+            <div className="flex items-center justify-between border-b border-border px-4 py-3">
+              <p className="font-mono text-[10px] tracking-[0.2em] text-danger">
+                ARQUIVO X
+              </p>
+              <span className="inline-flex items-center gap-1 font-mono text-[10px] tracking-[0.16em] text-danger">
+                <Lock className="size-3" strokeWidth={1.75} /> CLASSIFICADO
+              </span>
+            </div>
+            <div className="space-y-4 px-5 py-6 font-mono text-[11px] leading-relaxed tracking-[0.08em] text-dim">
+              <p>STATUS: CLASSIFICADO</p>
+              <p>ACESSO RESTRITO</p>
+              <p>
+                REQUISITO:
+                <span className="ml-2 text-muted">████████████</span>
+              </p>
+              <p>
+                CONTEÚDO:
+                <span className="ml-2 text-danger">[ ARQUIVO BLOQUEADO ]</span>
+              </p>
+            </div>
+            <p className="border-t border-border px-5 py-4 text-sm text-muted">
+              Você vai precisar provar que está preparado.
+            </p>
+            <div className="px-5 pb-5">
+              <Link to="/jogar">
+                <Btn className="w-full">Iniciar investigação</Btn>
+              </Link>
+            </div>
+          </div>
+
+          <div>
+            <ul className="divide-y divide-border overflow-hidden rounded-lg border border-border bg-surface">
+              {files.map((f) => (
+                <li
+                  key={f.code}
+                  className={cn(
+                    "flex min-h-16 items-center gap-4 px-4 py-3",
+                    f.mark === "?" && "bg-bg-elevated",
+                  )}
+                >
+                  <span
+                    className={cn(
+                      "w-5 font-mono text-sm",
+                      f.mark === "?" ? "text-danger" : "text-accent",
+                    )}
+                  >
+                    {f.mark}
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <p className="font-mono text-[10px] tracking-[0.18em] text-dim">
+                      {f.code}
+                    </p>
+                    <p
+                      className={cn(
+                        "mt-0.5 font-display text-lg font-semibold tracking-tight",
+                        f.mark === "?" && "text-muted",
+                      )}
+                    >
+                      {f.title}
+                    </p>
+                  </div>
+                  <span
+                    className={cn(
+                      "shrink-0 font-mono text-[10px] tracking-[0.16em]",
+                      f.mark === "?" ? "text-danger" : "text-accent",
+                    )}
+                  >
+                    {f.state}
+                  </span>
+                </li>
+              ))}
+            </ul>
+            <p className="mt-8 font-display text-2xl font-semibold tracking-tight md:text-3xl">
+              Todo investigador tem um caso que não deveria ter encontrado.
+            </p>
+            <p className="mt-3 max-w-md text-sm leading-relaxed text-muted">
+              Existe um arquivo fora da investigação principal. Seu conteúdo
+              permanece classificado.
+            </p>
+            <div className="mt-6">
+              <Link to="/jogar">
+                <Btn variant="ghost">Descobrir como acessar</Btn>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function Certificado({ reduce }: { reduce: boolean }) {
   const card = useRef<HTMLDivElement>(null);
   function tilt(e: MouseEvent<HTMLDivElement>) {
@@ -1044,6 +1163,10 @@ function Faq() {
     {
       q: "Preciso saber comando de computador?",
       a: "Não. O terminal SOC tem cinco toques em português. Quem quiser ainda pode digitar. O resto é olhar mensagem e marcar pista.",
+    },
+    {
+      q: "Tem um arquivo que não abre?",
+      a: "Algumas investigações não aparecem no início. O requisito permanece classificado. Você descobre dentro do quartel — não nesta página.",
     },
     {
       q: "É grátis? Precisa cadastrar?",

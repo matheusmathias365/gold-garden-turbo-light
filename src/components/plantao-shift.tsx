@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { ArrowLeft, Clock } from "lucide-react";
 import { AgentCertificate } from "@/components/certificate";
+import { ArchiveLog } from "@/components/ops-fx";
 import { Btn, Callout } from "@/components/ui";
 import {
   ACTION_LABEL,
@@ -246,6 +247,11 @@ export function PlantaoShift() {
             Na vida real a fila não pausa. O treino é parar a mão antes do
             PIX, do QR e da senha.
           </p>
+          <ArchiveLog
+            code="OP-002"
+            title="A pressa era a arma. Você arquivou a fila."
+            nextHint="O dossiê fecha. A pista fica: golpe, canal oficial ou ignorar — sem PIX no susto. O próximo arquivo no quartel é o QR."
+          />
           <div className="flex flex-wrap gap-3">
             <Btn onClick={start}>Novo plantão</Btn>
             <Link to="/jogar">

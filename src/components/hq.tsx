@@ -1,23 +1,44 @@
 import { Link } from "@tanstack/react-router";
 import { Lock, RotateCcw } from "lucide-react";
-import { ALL_IDS, PLANTAO_ID, QR_CASE_ID, VOZ_CASE_ID, countDone } from "@/lib/ids";
+import { ALL_IDS, PLANTAO_ID, QR_CASE_ID, VOZ_CASE_ID, X_CASE_ID, countDone } from "@/lib/ids";
 import { useProgress } from "@/lib/progress";
 import { Btn, Rail } from "@/components/ui";
 import { LegalNotice } from "@/components/legal-notice";
 import { CrtFrame, Ticker, AppHeader } from "@/components/shell";
-import { useState } from "react";
+import { SecretFile } from "@/components/elo-stage";
+import { ArchiveLog, CaseTrail, UnlockX, cinemaPending, markCinemaSeen } from "@/components/ops-fx";
+import { xOpen, xVisible } from "@/lib/session-xp";
+import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
 export function Hq() {
   const completed = useProgress((s) => s.completed);
   const callsign = useProgress((s) => s.callsign);
   const reset = useProgress((s) => s.reset);
+  const qrAt = useProgress((s) => s.qrAt);
+  const vozAt = useProgress((s) => s.vozAt);
+  const xAt = useProgress((s) => s.xAt);
+  const [cinema, setCinema] = useState(false);
   const [confirmReset, setConfirmReset] = useState(false);
 
   const dossie = countDone(completed, ALL_IDS);
   const plantao = completed.includes(PLANTAO_ID);
-  const qr = completed.includes(QR_CASE_ID);
-  const voz = completed.includes(VOZ_CASE_ID);
+  const qr = completed.includes(QR_CASE_ID) || Boolean(qrAt);
+  const voz = completed.includes(VOZ_CASE_ID) || Boolean(vozAt);
+  const xDone = completed.includes(X_CASE_ID) || Boolean(xAt);
+  const showX = xVisible(qr, voz, xDone);
+  const openX = xOpen(voz, xDone);
+
+  useEffect(() => {
+    if (openX && !xDone && cinemaPending()) setCinema(true);
+  }, [openX, xDone]);
+
+  const trail = [
+    { n: "#001", label: "olho", done: dossie === ALL_IDS.length, current: dossie < ALL_IDS.length },
+    { n: "#002", label: "pressa", done: plantao, current: dossie === ALL_IDS.length && !plantao },
+    { n: "#003", label: "QR", done: qr, current: plantao && !qr },
+    { n: "#004", label: "voz", done: voz, current: qr && !voz },
+  ];
 
   return (
     <CrtFrame>
@@ -38,6 +59,8 @@ export function Hq() {
         <div className="mt-6">
           <LegalNotice />
         </div>
+
+        <CaseTrail steps={trail} />
 
         <ul className="mt-8 space-y-4">
           <FileCard
@@ -84,10 +107,31 @@ export function Hq() {
             max={1}
             open
           />
+          {showX ? <SecretFile done={xDone} open={openX} /> : null}
         </ul>
 
+        {showX && !openX ? (
+          <p className="mt-6 text-sm text-muted">
+            Alguns arquivos exigem um nível maior de investigação. Arquive a voz.
+          </p>
+        ) : null}
+
+        {xDone ? (
+          <ArchiveLog
+            code="X-001"
+            title="O que fica não é o diploma."
+            nextHint="Você leu a ligação como quem defende. Autoridade, pedido pequeno, relógio, a vítima completando a frase. O momento — não a pessoa."
+          />
+        ) : null}
+
         <p className="mt-8 font-mono text-[10px] tracking-widest text-dim">
-          4 dossiês abertos
+          {xDone
+            ? "5 dossiês no quartel"
+            : showX
+              ? openX
+                ? "4 dossiês · arquivo X autorizado"
+                : "4 dossiês · um lacre"
+              : "4 dossiês abertos"}
         </p>
 
         <div className="mt-6">
@@ -109,6 +153,17 @@ export function Hq() {
           )}
         </div>
       </main>
+      <UnlockX
+        open={cinema}
+        onOpen={() => {
+          markCinemaSeen();
+          setCinema(false);
+        }}
+        onStay={() => {
+          markCinemaSeen();
+          setCinema(false);
+        }}
+      />
     </CrtFrame>
   );
 }

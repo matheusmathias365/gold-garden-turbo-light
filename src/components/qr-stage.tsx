@@ -3,6 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 import QRCode from "qrcode";
 import { AgentCertificate } from "@/components/certificate";
+import { ArchiveLog } from "@/components/ops-fx";
 import { Btn, Callout } from "@/components/ui";
 import {
   QR_ACTION_LABEL,
@@ -12,6 +13,7 @@ import {
   adjacentQr,
   judgeQr,
   qrById,
+  qrMiss,
   qrPayload,
   type QrAction,
   type QrScene,
@@ -83,7 +85,12 @@ function QrIndex() {
         })}
       </ul>
       {closed ? (
-        <div className="mt-10">
+        <div className="mt-10 space-y-8">
+          <ArchiveLog
+            code="OP-003"
+            title="O código mente. Você leu o destino."
+            nextHint="O dossiê fecha. A pista fica: destino ≠ carimbo, não pague. O próximo arquivo no quartel é a voz."
+          />
           <AgentCertificate
             callsign={callsign}
             ready
@@ -112,6 +119,7 @@ function QrSceneView({ scene }: { scene: QrScene }) {
   const { prev, next } = adjacentQr(scene.id);
   const [read, setRead] = useState(false);
   const [status, setStatus] = useState<"idle" | "ok" | "bad">("idle");
+  const [lastAct, setLastAct] = useState<QrAction | null>(null);
   const [activeId, setActiveId] = useState(scene.id);
   const archived = completed.includes(scene.id);
 
@@ -119,15 +127,18 @@ function QrSceneView({ scene }: { scene: QrScene }) {
     setActiveId(scene.id);
     setRead(false);
     setStatus("idle");
+    setLastAct(null);
   }
 
   useEffect(() => {
     setRead(false);
     setStatus("idle");
+    setLastAct(null);
   }, [scene.id]);
 
   function choose(action: QrAction) {
     if (!read || status === "ok") return;
+    setLastAct(action);
     const j = judgeQr(scene, action);
     if (j.ok) {
       setStatus("ok");
@@ -222,10 +233,10 @@ function QrSceneView({ scene }: { scene: QrScene }) {
               <Callout tone="info" title="DEBRIEF" text={scene.debrief} />
             </div>
           ) : null}
-          {status === "bad" ? (
-            <p className="mt-3 font-mono text-xs text-danger">
-              {status === "bad" && "Revise destino × carimbo. Pagar neste QR nunca é o passo deste treino."}
-            </p>
+          {status === "bad" && lastAct ? (
+            <div className="mt-4">
+              <Callout tone="warn" title="Aula do erro." text={qrMiss(scene, lastAct)} />
+            </div>
           ) : null}
           {archived && status !== "ok" ? (
             <p className="mt-3 font-mono text-xs text-accent">Cena já arquivada.</p>

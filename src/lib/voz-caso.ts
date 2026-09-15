@@ -123,6 +123,19 @@ export function judgeVoz(scene: VozScene, action: VozAction) {
   };
 }
 
+export function vozMiss(scene: VozScene, action: VozAction) {
+  if (action === "pagar") {
+    return "Transferir no susto é o golpe. A aula: a voz pode parecer real. O canal não é. Liga no número que você já usa.";
+  }
+  if (action === "ramal" && scene.correct === "encerrar") {
+    return "Banco e código por ligação pessoal não se conferem no mesmo recado. A aula: encerrar. O ramal oficial você discar depois, no número do app — não nesta ligação.";
+  }
+  if (action === "encerrar" && scene.correct === "ramal") {
+    return "Encerrar sem conferir deixa a dúvida. A aula: ligar no ramal ou no número antigo que você já tem — não no da ligação.";
+  }
+  return "Olhe o canal, não o timbre. Transferir ou passar código nunca é o passo deste treino.";
+}
+
 export const VOZ_ACTION_LABEL: Record<VozAction, string> = {
   ramal: "Ligar no número oficial",
   pagar: "Transferir / passar o código",

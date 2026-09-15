@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { useEffect, useState } from "react";
 import { sanitizeCallsign } from "@/lib/safe";
+import { awardXp, useSessionXp } from "@/lib/session-xp";
 
 export type Score = { correct: number; total: number };
 
@@ -15,6 +16,7 @@ type ProgressState = {
   plantaoAt: string | null;
   qrAt: string | null;
   vozAt: string | null;
+  xAt: string | null;
   setCallsign: (callsign: string) => void;
   completeBoot: () => void;
   markComplete: (id: string) => void;
@@ -24,6 +26,7 @@ type ProgressState = {
   issuePlantao: () => void;
   issueQr: () => void;
   issueVoz: () => void;
+  issueX: () => void;
   reset: () => void;
 };
 
@@ -37,6 +40,7 @@ const empty = {
   plantaoAt: null as string | null,
   qrAt: null as string | null,
   vozAt: null as string | null,
+  xAt: null as string | null,
 };
 
 export const useProgress = create<ProgressState>()(
@@ -51,25 +55,48 @@ export const useProgress = create<ProgressState>()(
         ),
       setScore: (id, correct, total) =>
         set((s) => {
+          const per = id === "plantao" ? 25 : 40;
+          awardXp(`score:${id}`, per * Math.max(0, correct));
+          if (id === "plantao" && total > 0 && correct >= total) {
+            awardXp("perfect:plantao", 100);
+          }
           const prev = s.scores[id];
           if (prev && prev.correct >= correct && prev.total === total) return s;
           return { scores: { ...s.scores, [id]: { correct, total } } };
         }),
       addClue: (labId, clueId) =>
         set((s) => {
+          awardXp(`clue:${labId}:${clueId}`, 20);
           const cur = s.clues[labId] ?? [];
           if (cur.includes(clueId)) return s;
           return { clues: { ...s.clues, [labId]: [...cur, clueId] } };
         }),
       issueCertificate: () =>
-        set((s) => (s.issuedAt ? s : { issuedAt: new Date().toISOString() })),
+        set((s) => {
+          awardXp("case:001", 500);
+          return s.issuedAt ? s : { issuedAt: new Date().toISOString() };
+        }),
       issuePlantao: () =>
-        set((s) => (s.plantaoAt ? s : { plantaoAt: new Date().toISOString() })),
+        set((s) => {
+          awardXp("case:002", 400);
+          return s.plantaoAt ? s : { plantaoAt: new Date().toISOString() };
+        }),
       issueQr: () =>
-        set((s) => (s.qrAt ? s : { qrAt: new Date().toISOString() })),
+        set((s) => {
+          awardXp("case:003", 400);
+          return s.qrAt ? s : { qrAt: new Date().toISOString() };
+        }),
       issueVoz: () =>
-        set((s) => (s.vozAt ? s : { vozAt: new Date().toISOString() })),
-      reset: () => set({ ...empty }),
+        set((s) => {
+          awardXp("case:004", 400);
+          return s.vozAt ? s : { vozAt: new Date().toISOString() };
+        }),
+      issueX: () =>
+        set((s) => (s.xAt ? s : { xAt: new Date().toISOString() })),
+      reset: () => {
+        useSessionXp.getState().resetSession();
+        set({ ...empty });
+      },
     }),
     { name: "operacao-phishing-v1" },
   ),
