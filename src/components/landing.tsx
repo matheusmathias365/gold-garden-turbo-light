@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useRef, useState, type MouseEvent, type ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
-import { Lock } from "lucide-react";
 import { CERT_LEGAL } from "@/lib/certificate";
 import {
   PhishingAttack,
@@ -37,23 +36,26 @@ export function Landing() {
       <PanicButton onClick={() => setPanic(true)} />
 
       <Nav />
-      <div className="h-16" aria-hidden />
       <TickerLand />
 
       <main className="relative z-10">
         <Hero reduce={reduce} />
+        <Teaser reduce={reduce} />
         <Inspect />
+        <Metodo />
         <Golpe reduce={reduce} />
         <ComoJogar />
         <Ficha />
         <Frase reduce={reduce} />
         <Pistas reduce={reduce} />
         <Dossie />
-        <Classificados />
         <Saber />
+        <Aprender />
+        <Caiu />
         <Depois />
         <Certificado reduce={reduce} />
         <ParaQuem />
+        <Aviso />
         <Faq />
         <CtaFinal reduce={reduce} />
       </main>
@@ -64,21 +66,20 @@ export function Landing() {
 
 function Nav() {
   return (
-    <header className="fixed inset-x-0 top-0 z-40 border-b border-border/70 bg-bg/80 backdrop-blur-md">
-      <div className="mx-auto flex max-w-6xl items-center gap-3 px-5 py-3">
-        <a href="#inicio" className="inline-flex min-h-11 shrink-0 items-center font-display text-sm font-semibold tracking-tight">
+    <header className="sticky top-0 z-40 border-b border-border/70 bg-bg/75 backdrop-blur-md">
+      <div className="mx-auto flex max-w-6xl items-center gap-4 px-5 py-3">
+        <a href="#inicio" className="inline-flex min-h-11 items-center font-display text-sm font-semibold tracking-tight">
           Operação <span className="text-accent">Phishing</span>
         </a>
-        <nav className="ml-auto flex min-w-0 items-center gap-5 overflow-x-auto font-mono text-[10px] tracking-[0.18em] text-muted [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-          <a href="#golpe" className="inline-flex min-h-11 shrink-0 items-center hover:text-fg">O golpe</a>
-          <a href="#casos" className="inline-flex min-h-11 shrink-0 items-center hover:text-fg">Casos</a>
-          <a href="#lacre" className="inline-flex min-h-11 shrink-0 items-center hover:text-fg">Classificado</a>
-          <a href="#como" className="inline-flex min-h-11 shrink-0 items-center hover:text-fg">Como jogar</a>
-          <a href="#saber" className="inline-flex min-h-11 shrink-0 items-center hover:text-fg">Phishing</a>
-          <a href="#faq" className="inline-flex min-h-11 shrink-0 items-center hover:text-fg">FAQ</a>
-          <a href="#certificado" className="inline-flex min-h-11 shrink-0 items-center hover:text-fg">Certificado</a>
+        <nav className="ml-auto hidden items-center gap-6 font-mono text-[10px] tracking-[0.18em] text-muted md:flex">
+          <a href="#golpe" className="inline-flex min-h-11 items-center hover:text-fg">O golpe</a>
+          <a href="#metodo" className="inline-flex min-h-11 items-center hover:text-fg">Como funciona</a>
+          <a href="#casos" className="inline-flex min-h-11 items-center hover:text-fg">Casos</a>
+          <a href="#aprender" className="inline-flex min-h-11 items-center hover:text-fg">Aprender</a>
+          <a href="#certificado" className="inline-flex min-h-11 items-center hover:text-fg">Certificado</a>
+          <a href="#faq" className="inline-flex min-h-11 items-center hover:text-fg">FAQ</a>
         </nav>
-        <Link to="/jogar" className="shrink-0">
+        <Link to="/jogar">
           <Btn className="glow-cta">Jogar</Btn>
         </Link>
       </div>
@@ -92,8 +93,8 @@ function TickerLand() {
       <div className="ticker flex w-max gap-10 whitespace-nowrap">
         {Array.from({ length: 8 }).map((_, i) => (
           <span key={i}>
-            SIMULAÇÃO AO VIVO · JOGO ONLINE · #001 OLHO · #002 PRESSA · #003 QR ·
-            #004 VOZ · ARQUIVO X · CLASSIFICADO · PARAR → ANALISAR → VERIFICAR → AGIR
+            SIMULAÇÃO AO VIVO · TREINAMENTO 100% EDUCACIONAL · #001 OLHO · #002 PRESSA · #003 QR ·
+            #004 VOZ · ARQUIVO X LACRADO · SMS · E-MAIL · PIX · QR · VOZ · LINKS · PARAR → ANALISAR → VERIFICAR → AGIR
           </span>
         ))}
       </div>
@@ -122,7 +123,7 @@ function Hero({ reduce }: { reduce: boolean }) {
   }, [reduce]);
 
   return (
-    <section id="inicio" className="relative min-h-[calc(100dvh-96px)] scroll-mt-24 overflow-hidden">
+    <section id="inicio" className="relative min-h-[calc(100dvh-96px)] overflow-hidden">
       <div
         className={cn(
           "ambient-layer pointer-events-none absolute inset-0",
@@ -139,7 +140,7 @@ function Hero({ reduce }: { reduce: boolean }) {
       <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-5 py-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:py-8">
         <div className="stagger-in relative z-10 max-w-xl">
           <p className="font-mono text-[10px] tracking-[0.28em] text-danger">
-            CASO #001 · SOC v2.4 · TREINO EDUCACIONAL
+            TREINAMENTO EDUCACIONAL · SOC v2.4 · 100% SIMULAÇÃO
           </p>
           <h1
             className="mt-5 flex flex-col items-start font-display text-6xl font-semibold leading-none tracking-tight md:text-8xl"
@@ -167,9 +168,20 @@ function Hero({ reduce }: { reduce: boolean }) {
             </span>
           </h1>
           <p className="mt-6 text-xl md:text-2xl">Você já ia clicar.</p>
-          <p className="mt-3 max-w-md text-sm leading-relaxed text-muted">
-            Jogo online de cibersegurança. Quatro casos no quartel. Sem caixa,
-            sem envio, sem instalar. Abre no navegador — celular ou computador.
+          <p className="mt-1 text-xl text-accent md:text-2xl">Agora você treina.</p>
+          <p className="mt-4 max-w-md text-sm leading-relaxed text-muted">
+            Treinamento interativo para reconhecer phishing antes do clique.
+            Quatro casos no quartel. Sem caixa, sem envio, sem instalar.
+          </p>
+          <ul className="mt-5 flex flex-wrap gap-2 font-mono text-[10px] tracking-[0.16em] text-dim">
+            {["SMS", "E-MAIL", "PIX", "QR", "VOZ", "LINKS"].map((v) => (
+              <li key={v} className="rounded-sm border border-border px-2 py-1">
+                {v}
+              </li>
+            ))}
+          </ul>
+          <p className="mt-4 font-mono text-[10px] tracking-[0.22em] text-accent">
+            ● 100% EDUCACIONAL · NENHUM GOLPE É ENVIADO
           </p>
           <p className="mt-4 max-w-md text-xs leading-relaxed text-dim">
             Este dossiê é um material de treinamento exclusivamente educacional.
@@ -178,14 +190,14 @@ function Hero({ reduce }: { reduce: boolean }) {
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link to="/jogar">
-              <Btn className="glow-cta px-6">Entrar na missão</Btn>
+              <Btn className="glow-cta px-6">Iniciar investigação</Btn>
             </Link>
             <a href="#certificado">
               <Btn variant="ghost">Ver o certificado</Btn>
             </a>
           </div>
           <p className="mt-4 font-mono text-[10px] tracking-[0.16em] text-dim">
-            jogo online · 8 min · certificado na tela
+            jogo educativo · 8 min · certificado na tela
           </p>
         </div>
 
@@ -207,6 +219,76 @@ function Hero({ reduce }: { reduce: boolean }) {
           <p className="mt-4 text-center font-mono text-[10px] tracking-[0.16em] text-dim">
             o golpe, em loop · ninguém é atingido
           </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Teaser({ reduce }: { reduce: boolean }) {
+  const ref = useRef<HTMLVideoElement>(null);
+  const [needPlay, setNeedPlay] = useState(reduce);
+
+  useEffect(() => {
+    const v = ref.current;
+    if (!v || reduce) return;
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) {
+          v.play().catch(() => setNeedPlay(true));
+        } else {
+          v.pause();
+        }
+      },
+      { threshold: 0.4 },
+    );
+    io.observe(v);
+    return () => io.disconnect();
+  }, [reduce]);
+
+  return (
+    <section id="arquivo" className="land-section">
+      <div className="mx-auto max-w-6xl px-5 py-16 md:py-24">
+        <p className="font-mono text-[10px] tracking-[0.28em] text-danger">
+          ARQUIVO CONFIDENCIAL · SISTEMA SOC
+        </p>
+        <h2 className="mt-3 max-w-3xl font-display text-4xl font-semibold tracking-tight md:text-6xl">
+          Você consegue desvendar o golpe?
+        </h2>
+        <p className="mt-4 max-w-xl text-sm leading-relaxed text-muted">
+          Um dossiê na mesa. Uma mensagem urgente. A escolha é sua — e o
+          golpista conta com o clique.
+        </p>
+
+        <div className="teaser-well relative mt-10 overflow-hidden rounded-lg border border-border bg-bg">
+          <video
+            ref={ref}
+            className="aspect-video w-full bg-bg object-cover"
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            poster={assetUrl("teaser.jpg")}
+            controls={needPlay}
+            aria-label="Teaser Operação Phishing. Simulação. Ninguém é atingido."
+          >
+            <source src={assetUrl("teaser.mp4")} type="video/mp4" />
+          </video>
+          <span className="pointer-events-none absolute left-3 top-3 hidden font-mono text-[10px] tracking-[0.22em] text-accent sm:block">
+            ARQUIVO 01
+          </span>
+          <span className="pointer-events-none absolute bottom-4 right-4 hidden rotate-[-12deg] border border-danger/80 px-2 py-1 font-mono text-[10px] tracking-[0.2em] text-danger sm:block">
+            CONFIDENCIAL
+          </span>
+        </div>
+
+        <p className="mt-4 font-mono text-[10px] tracking-[0.18em] text-dim">
+          41s · simulação · silêncio nesta página · ninguém é atingido
+        </p>
+        <div className="mt-6">
+          <Link to="/jogar">
+            <Btn className="glow-cta">Iniciar investigação</Btn>
+          </Link>
         </div>
       </div>
     </section>
@@ -310,6 +392,55 @@ function Mark({
     >
       {children}
     </button>
+  );
+}
+
+function Metodo() {
+  const steps = [
+    ["01", "OBSERVE", "Analise a mensagem. SMS, e-mail, PIX, QR, voz — o canal muda, o padrão não."],
+    ["02", "INVESTIGUE", "Encontre os sinais: isca, pressão, remetente, destino do link, pedido."],
+    ["03", "DECIDA", "Escolha a atitude mais segura. Arquivar. Ligar no canal oficial. Não clicar."],
+  ];
+
+  return (
+    <section id="metodo" className="land-section">
+      <div className="mx-auto max-w-6xl px-5 py-16 md:py-24">
+        <p className="font-mono text-[10px] tracking-[0.22em] text-accent">COMO FUNCIONA</p>
+        <h2 className="mt-3 max-w-3xl font-display text-4xl font-semibold tracking-tight md:text-6xl">
+          Não é só um quiz.
+        </h2>
+        <p className="mt-5 max-w-lg text-sm leading-relaxed text-muted">
+          Você recebe situações inspiradas em golpes reais e precisa analisar os
+          sinais antes de tomar uma decisão. O objetivo não é pontuar. É
+          reconhecer a armadilha — nunca montá-la.
+        </p>
+        <ol className="mt-16 space-y-14">
+          {steps.map(([n, t, b]) => (
+            <li key={n} className="grid gap-3 md:grid-cols-[7rem_minmax(0,1fr)] md:items-baseline">
+              <p className="font-mono text-[10px] tracking-[0.22em] text-accent">{n}</p>
+              <div>
+                <h3 className="font-display text-3xl font-semibold tracking-tight md:text-5xl">{t}</h3>
+                <p className="mt-3 max-w-md text-sm leading-relaxed text-muted">{b}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+        <div className="mt-20 grid gap-10 md:grid-cols-2">
+          <div>
+            <p className="font-mono text-[10px] tracking-[0.22em] text-dim">OUTROS</p>
+            <p className="mt-3 font-display text-2xl font-semibold tracking-tight">
+              Responde → certo ou errado → fim.
+            </p>
+          </div>
+          <div>
+            <p className="font-mono text-[10px] tracking-[0.22em] text-accent">OPERAÇÃO PHISHING</p>
+            <p className="mt-3 font-display text-2xl font-semibold tracking-tight">
+              Investiga → analisa → entende → se protege.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -452,9 +583,11 @@ function ComoJogar() {
 
 function Ficha() {
   const rows = [
-    ["Tipo", "Jogo online no navegador"],
+    ["Tipo", "Treinamento interativo de conscientização"],
+    ["Formato", "Jogo online no navegador"],
     ["Entrega", "Nenhuma. Sem caixa, sem correio"],
     ["Casos", "4 — #001 olho, #002 pressa, #003 QR, #004 voz"],
+    ["Vetores", "SMS · e-mail · PIX · QR · voz · links"],
     ["Duração", "8 a 40 minutos, no seu ritmo"],
     ["Preço", "Grátis. Sem cadastro"],
     ["Missão", "Reconhecer phishing. Não reproduzir."],
@@ -764,6 +897,9 @@ function Dossie() {
           Mesmo quartel. Quatro instrumentos. Reconhecer a armadilha — nunca
           montá-la.
         </p>
+        <p className="mt-6 font-mono text-[10px] tracking-[0.18em] text-dim">
+          4 ARQUIVOS · 4 CERTIFICADOS · PROGRESSO NO QUARTEL
+        </p>
       </div>
       <div className="mx-auto grid max-w-6xl gap-10 px-5 pb-24 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]">
         <div className="lg:sticky lg:top-24 lg:self-start">
@@ -832,122 +968,6 @@ function Dossie() {
   );
 }
 
-function Classificados() {
-  const files = [
-    { mark: "✓", code: "OPERAÇÃO #001", title: "Operação Phishing", state: "ABERTO" },
-    { mark: "✓", code: "OPERAÇÃO #002", title: "Plantão SOC", state: "ABERTO" },
-    { mark: "✓", code: "OPERAÇÃO #003", title: "O QR", state: "ABERTO" },
-    { mark: "✓", code: "OPERAÇÃO #004", title: "A voz", state: "ABERTO" },
-    { mark: "?", code: "ARQUIVO X", title: "█████████████████", state: "ACESSO RESTRITO" },
-  ];
-
-  return (
-    <section id="lacre" className="land-section scroll-mt-24">
-      <div className="mx-auto max-w-6xl px-5 py-16 md:py-28">
-        <p className="font-mono text-[10px] tracking-[0.22em] text-danger">
-          ARQUIVOS CLASSIFICADOS
-        </p>
-        <h2 className="mt-3 max-w-4xl font-display text-4xl font-semibold tracking-tight md:text-6xl">
-          Existe um arquivo que você ainda não viu.
-        </h2>
-        <p className="mt-5 max-w-xl text-sm leading-relaxed text-muted">
-          Algumas investigações não aparecem no início. O conteúdo permanece
-          classificado. O requisito também.
-        </p>
-
-        <div className="mt-12 grid gap-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:items-start">
-          <div className="overflow-hidden rounded-lg border border-danger/35 bg-bg-elevated shadow-panel">
-            <div className="flex items-center justify-between border-b border-border px-4 py-3">
-              <p className="font-mono text-[10px] tracking-[0.2em] text-danger">
-                ARQUIVO X
-              </p>
-              <span className="inline-flex items-center gap-1 font-mono text-[10px] tracking-[0.16em] text-danger">
-                <Lock className="size-3" strokeWidth={1.75} /> CLASSIFICADO
-              </span>
-            </div>
-            <div className="space-y-4 px-5 py-6 font-mono text-[11px] leading-relaxed tracking-[0.08em] text-dim">
-              <p>STATUS: CLASSIFICADO</p>
-              <p>ACESSO RESTRITO</p>
-              <p>
-                REQUISITO:
-                <span className="ml-2 text-muted">████████████</span>
-              </p>
-              <p>
-                CONTEÚDO:
-                <span className="ml-2 text-danger">[ ARQUIVO BLOQUEADO ]</span>
-              </p>
-            </div>
-            <p className="border-t border-border px-5 py-4 text-sm text-muted">
-              Você vai precisar provar que está preparado.
-            </p>
-            <div className="px-5 pb-5">
-              <Link to="/jogar">
-                <Btn className="w-full">Iniciar investigação</Btn>
-              </Link>
-            </div>
-          </div>
-
-          <div>
-            <ul className="divide-y divide-border overflow-hidden rounded-lg border border-border bg-surface">
-              {files.map((f) => (
-                <li
-                  key={f.code}
-                  className={cn(
-                    "flex min-h-16 items-center gap-4 px-4 py-3",
-                    f.mark === "?" && "bg-bg-elevated",
-                  )}
-                >
-                  <span
-                    className={cn(
-                      "w-5 font-mono text-sm",
-                      f.mark === "?" ? "text-danger" : "text-accent",
-                    )}
-                  >
-                    {f.mark}
-                  </span>
-                  <div className="min-w-0 flex-1">
-                    <p className="font-mono text-[10px] tracking-[0.18em] text-dim">
-                      {f.code}
-                    </p>
-                    <p
-                      className={cn(
-                        "mt-0.5 font-display text-lg font-semibold tracking-tight",
-                        f.mark === "?" && "text-muted",
-                      )}
-                    >
-                      {f.title}
-                    </p>
-                  </div>
-                  <span
-                    className={cn(
-                      "shrink-0 font-mono text-[10px] tracking-[0.16em]",
-                      f.mark === "?" ? "text-danger" : "text-accent",
-                    )}
-                  >
-                    {f.state}
-                  </span>
-                </li>
-              ))}
-            </ul>
-            <p className="mt-8 font-display text-2xl font-semibold tracking-tight md:text-3xl">
-              Todo investigador tem um caso que não deveria ter encontrado.
-            </p>
-            <p className="mt-3 max-w-md text-sm leading-relaxed text-muted">
-              Existe um arquivo fora da investigação principal. Seu conteúdo
-              permanece classificado.
-            </p>
-            <div className="mt-6">
-              <Link to="/jogar">
-                <Btn variant="ghost">Descobrir como acessar</Btn>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function Certificado({ reduce }: { reduce: boolean }) {
   const card = useRef<HTMLDivElement>(null);
   function tilt(e: MouseEvent<HTMLDivElement>) {
@@ -972,8 +992,10 @@ function Certificado({ reduce }: { reduce: boolean }) {
             <br />E com diploma.
           </h2>
           <p className="mt-4 max-w-md text-sm leading-relaxed text-muted">
-            O nome do boot aparece no certificado na hora. PNG 1080×1920 para
-            baixar ou postar. Nada é enviado pelo correio.
+            Conclua o treinamento e gere seu certificado de conclusão em
+            conscientização sobre phishing e cibersegurança. O callsign do boot
+            aparece na hora. PNG 1080×1920 para baixar ou postar. Nada é
+            enviado pelo correio. Não substitui diploma oficial.
           </p>
           <p className="mt-4 max-w-md text-xs leading-relaxed text-danger">{CERT_LEGAL}</p>
         </div>
@@ -985,7 +1007,11 @@ function Certificado({ reduce }: { reduce: boolean }) {
             className="overflow-hidden rounded-lg border border-accent/40 bg-bg-elevated shadow-panel transition-transform duration-150 ease-out"
           >
             <div className="relative h-48 overflow-hidden">
-              <img src={assetUrl("/cert-side.jpg")} alt="" className="h-full w-full object-cover" />
+              <img
+                src={assetUrl("/cert-side.jpg")}
+                alt="Prévia do certificado de conclusão da Operação Phishing, formato stories."
+                className="h-full w-full object-cover"
+              />
               <div className="stamp-in absolute right-4 top-4 rotate-[-16deg] rounded-sm border-2 border-accent px-2 py-1 font-mono text-[10px] font-semibold tracking-[0.2em] text-accent">
                 CERTIFICADO
               </div>
@@ -1018,6 +1044,7 @@ function ParaQuem() {
         <ul className="mt-8 space-y-8">
           <li className="font-display text-3xl font-semibold tracking-tight md:text-5xl">Quem já quase clicou.</li>
           <li className="font-display text-3xl font-semibold tracking-tight md:text-5xl">Quem ensina alguém em casa.</li>
+          <li className="font-display text-3xl font-semibold tracking-tight md:text-5xl">Quem treina equipe ou sala.</li>
           <li className="font-display text-3xl font-semibold tracking-tight md:text-5xl">
             Quem quer 8 minutos.<span className="text-muted"> Não uma caixa.</span>
           </li>
@@ -1066,6 +1093,105 @@ function Saber() {
             <Btn>Jogar no navegador</Btn>
           </Link>
         </div>
+      </div>
+    </section>
+  );
+}
+
+function Aprender() {
+  const items = [
+    ["Urgência", "Relógio, “não ligue”, dez minutos — a pressa impede a contraprova."],
+    ["Remetente", "Quem manda nunca é quem diz ser. Domínio, ramal, tom."],
+    ["Link", "O escrito e o destino. Norte vira n0rte — um zero no O."],
+    ["PIX", "Chefe, taxa, prêmio. Dinheiro nunca pelo atalho da mensagem."],
+    ["QR", "O código aponta para um lugar; o carimbo, para outro."],
+    ["Voz", "O timbre engana. O canal denuncia: ligou no pessoal, pede segredo."],
+    ["Engenharia social", "Medo, prêmio, autoridade. O gancho que faz você abrir."],
+    ["Depois do clique", "Pare, troque a senha no app oficial, ligue o 2FA."],
+  ];
+
+  return (
+    <section id="aprender" className="land-section">
+      <div className="mx-auto max-w-6xl px-5 py-16 md:py-24">
+        <p className="font-mono text-[10px] tracking-[0.22em] text-accent">O QUE VOCÊ VAI APRENDER</p>
+        <h2 className="mt-3 max-w-3xl font-display text-4xl font-semibold tracking-tight md:text-6xl">
+          Não é decorar golpes.
+          <br />
+          É reconhecer os sinais.
+        </h2>
+        <p className="mt-5 max-w-lg text-sm leading-relaxed text-muted">
+          Identificar mensagem suspeita, conferir link e remetente, travar o
+          reflexo do PIX e do QR, e saber quando não clicar.
+        </p>
+        <ul className="mt-16 grid gap-10 md:grid-cols-2">
+          {items.map(([t, b]) => (
+            <li key={t}>
+              <p className="font-display text-2xl font-semibold tracking-tight">{t}</p>
+              <p className="mt-2 max-w-sm text-sm leading-relaxed text-muted">{b}</p>
+            </li>
+          ))}
+        </ul>
+        <div className="mt-14">
+          <Link to="/jogar">
+            <Btn>Treinar os sinais</Btn>
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Caiu() {
+  return (
+    <section className="land-section">
+      <div className="mx-auto flex min-h-[56vh] max-w-4xl flex-col items-center justify-center px-5 py-24 text-center">
+        <p className="font-mono text-[10px] tracking-[0.28em] text-danger">VOCÊ CAIRIA?</p>
+        <h2 className="mt-5 font-display text-4xl font-semibold leading-[1.08] tracking-tight md:text-6xl">
+          Nem todo phishing
+          <br />
+          parece suspeito
+          <br />
+          à primeira vista.
+        </h2>
+        <p className="mt-6 max-w-md text-sm leading-relaxed text-muted">
+          Teste sua capacidade de identificar os sinais. Oito minutos. Quatro
+          arquivos. Sem cadastro.
+        </p>
+        <div className="mt-10">
+          <Link to="/jogar">
+            <Btn className="glow-cta px-8">Iniciar investigação</Btn>
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Aviso() {
+  return (
+    <section id="aviso" className="land-section">
+      <div className="mx-auto max-w-3xl px-5 py-16 md:py-24">
+        <p className="font-mono text-[10px] tracking-[0.22em] text-danger">AVISO EDUCACIONAL</p>
+        <h2 className="mt-3 font-display text-4xl font-semibold tracking-tight md:text-5xl">
+          Treinamento.
+          <br />
+          Não simulador de golpe.
+        </h2>
+        <p className="mt-6 text-sm leading-relaxed text-muted">
+          O Operação Phishing é uma ferramenta exclusivamente educacional,
+          desenvolvida para conscientização e treinamento em cibersegurança.
+          A plataforma não cria, não envia e não executa golpes reais. Não
+          incentiva, não ensina e não autoriza prática ilegal ou criminosa.
+        </p>
+        <p className="mt-4 text-sm leading-relaxed text-muted">
+          Qualquer ato a partir deste material é de responsabilidade de quem
+          pratica e está sujeito à lei — Código Penal, art. 171, § 2º-A (fraude
+          eletrônica) e art. 154-A (invasão de dispositivo).
+        </p>
+        <p className="mt-4 text-sm leading-relaxed text-dim">
+          Não é órgão oficial. Não é Polícia Federal. A estética de dossiê é
+          teatro de treino.
+        </p>
       </div>
     </section>
   );
@@ -1142,6 +1268,14 @@ function Depois() {
 function Faq() {
   const items = [
     {
+      q: "Tem arquivo que não abre no quartel?",
+      a: "Depois do QR, um lacre aparece. Arquivar a voz fecha o lacre — o XP daquele caso basta. Não existe conta, perfil nem ranking.",
+    },
+    {
+      q: "Isso é treinamento ou um simulador de golpe?",
+      a: "Treinamento 100% educacional. Nenhum golpe real é criado, enviado ou executado. Você reconhece a armadilha — a plataforma nunca a monta.",
+    },
+    {
       q: "Isso é jogo ou aula?",
       a: "Jogo online com treino. Quatro casos no quartel: o olho, a pressa, o QR e a voz. Oito a quarenta minutos. Sem caixa, sem PDF, sem espera.",
     },
@@ -1164,10 +1298,6 @@ function Faq() {
     {
       q: "Preciso saber comando de computador?",
       a: "Não. O terminal SOC tem cinco toques em português. Quem quiser ainda pode digitar. O resto é olhar mensagem e marcar pista.",
-    },
-    {
-      q: "Tem um arquivo que não abre?",
-      a: "Algumas investigações não aparecem no início. O requisito permanece classificado. Você descobre dentro do quartel — não nesta página.",
     },
     {
       q: "É grátis? Precisa cadastrar?",
@@ -1279,7 +1409,7 @@ function CtaFinal({ reduce }: { reduce: boolean }) {
           Assuma o posto.
         </h2>
         <p className="mt-4 text-sm text-muted">
-          Quatro casos. Jogo online. Sem caixa. Sem envio.
+          Pronto para investigar? Quatro casos. Jogo online. Sem caixa. Sem envio.
         </p>
         <ul
           className={cn(
@@ -1336,53 +1466,56 @@ function CtaFinal({ reduce }: { reduce: boolean }) {
 }
 
 function Footer() {
-  const year = 2026;
   return (
-    <footer className="relative z-10 border-t border-border/60 px-5 py-16">
-      <div className="mx-auto grid max-w-6xl gap-12 md:grid-cols-2">
-        <div>
-          <p className="font-display text-lg font-semibold tracking-tight text-fg">
+    <footer className="relative z-10 px-5 py-16">
+      <div className="mx-auto grid max-w-6xl gap-12 md:grid-cols-3">
+        <div className="space-y-3 text-xs leading-relaxed text-dim">
+          <p className="font-display text-lg font-semibold text-fg">
             Operação <span className="text-accent">Phishing</span>
           </p>
-          <p className="mt-2 font-mono text-[10px] tracking-[0.22em] text-dim">
-            SOBRE O PROJETO
+          <p className="text-muted">
+            Sobre o projeto. Experiência educacional de conscientização em
+            segurança digital. Situações simuladas para ensinar a reconhecer
+            sinais comuns de phishing e engenharia social.
           </p>
-          <p className="mt-3 max-w-md text-sm leading-relaxed text-muted">
-            Jogo-treino de cibersegurança. Você reconhece a isca — SMS, e-mail,
-            PIX, QR, voz — sem montar golpe nenhum. Simulação. Não é órgão
-            oficial.
-          </p>
-          <p className="mt-6 font-mono text-[10px] tracking-[0.16em] text-dim">
-            © {year} Operação Phishing · treino educacional
-          </p>
-          <p className="mt-3 font-mono text-[10px] tracking-[0.16em] text-muted">
-            <a
-              href="https://instagram.com/mathiasmfernandes"
-              className="hover:text-fg"
-              rel="noreferrer"
-              target="_blank"
-            >
-              @mathiasmfernandes
-            </a>
-          </p>
+          <p>© 2026 · Jogo educativo online</p>
         </div>
-
-        <div>
-          <p className="font-mono text-[10px] tracking-[0.22em] text-dim">
-            AVISO
-          </p>
-          <p className="mt-4 max-w-md text-sm leading-relaxed text-muted">
+        <div className="space-y-3 text-xs leading-relaxed text-dim">
+          <p className="font-mono text-[10px] tracking-[0.18em] text-accent">AVISO</p>
+          <p className="text-muted">
             Este dossiê é um material de treinamento exclusivamente educacional.
             Seu conteúdo não apoia, não ensina nem autoriza qualquer prática
             ilegal ou criminosa.
           </p>
-          <p className="mt-3 max-w-md text-xs leading-relaxed text-dim">
+          <p>
             Fraude eletrônica: Código Penal, art. 171, § 2º-A (Lei nº 14.155/2021).
             Invasão: art. 154-A (Lei nº 12.737/2012).
           </p>
-          <p className="mt-6 font-mono text-[10px] tracking-[0.16em] text-dim">
-            JOGO ONLINE · SEM CAIXA · SEM ENVIO
+          <p>{CERT_LEGAL}</p>
+        </div>
+        <div className="space-y-2 font-mono text-[10px] tracking-[0.16em] text-dim md:text-right">
+          <p>
+            <a href="#metodo" className="hover:text-fg">Como funciona</a>
           </p>
+          <p>
+            <a href="#casos" className="hover:text-fg">Casos</a>
+          </p>
+          <p>
+            <a href="#aprender" className="hover:text-fg">O que você aprende</a>
+          </p>
+          <p>
+            <a href="#certificado" className="hover:text-fg">Certificado</a>
+          </p>
+          <p>
+            <a href="#aviso" className="hover:text-fg">Aviso educacional</a>
+          </p>
+          <p>
+            <Link to="/jogar" className="hover:text-fg">Jogar agora</Link>
+          </p>
+          <p className="pt-4">JOGO ONLINE · SEM CAIXA · SEM ENVIO</p>
+          <p>SIMULAÇÃO · NÃO É ÓRGÃO OFICIAL</p>
+          <p>PULAR INTRO EXISTE NO JOGO</p>
+          <p>@mathiasmfernandes</p>
         </div>
       </div>
     </footer>
