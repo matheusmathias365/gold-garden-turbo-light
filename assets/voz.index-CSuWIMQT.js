@@ -1,0 +1,1 @@
+import{l as e}from"./utils-k-GKzDDU.js";import{r as t}from"./shell-DD6v7AXv.js";import{t as n}from"./voz-stage-BuHC-e6A.js";var r=e(),i=()=>(0,r.jsx)(t,{children:(0,r.jsx)(n,{})});export{i as component};

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Btn } from "@/components/ui";
 import { cn } from "@/lib/utils";
@@ -51,6 +51,107 @@ export function RedGlyphTrail({ enabled }: { enabled: boolean }) {
   );
 }
 
+const FACE = [
+  '"IBM Plex Mono", ui-monospace, Menlo, monospace',
+  '"Space Grotesk", ui-sans-serif, system-ui, sans-serif',
+  'Georgia, "Times New Roman", serif',
+  'Impact, "Arial Black", sans-serif',
+  'Palatino, "Palatino Linotype", ui-serif, serif',
+  '"Courier New", Courier, monospace',
+  "cursive",
+];
+
+const GLYPH_H = ["h", "H", "ħ", "н", "ĥ", "ʜ", "#", "𝔥"];
+const GLYPH_A = ["a", "A", "α", "а", "@", "4", "å", "ä"];
+
+type FailCh = {
+  ch: string;
+  face: string;
+  scaleY: number;
+  y: number;
+  skew: number;
+  rotate: number;
+  weight: number;
+};
+
+function failFrame(tick: number): FailCh[] {
+  return Array.from({ length: 6 }, (_, i) => {
+    const pool = i % 2 === 0 ? GLYPH_H : GLYPH_A;
+    const real = i % 2 === 0 ? "h" : "a";
+    const corrupt = (tick + i * 3) % 4 !== 1;
+    const g = pool[(tick + i * 2) % pool.length] ?? real;
+    return {
+      ch: corrupt ? g : real,
+      face: FACE[(tick + i * 2) % FACE.length] ?? FACE[0]!,
+      scaleY: 0.68 + ((tick + i * 5) % 7) * 0.12,
+      y: ((tick * 3 + i * 11) % 13) - 6,
+      skew: ((tick + i * 7) % 17) - 8,
+      rotate: ((tick * 2 + i * 5) % 11) - 5,
+      weight: 500 + ((tick + i) % 3) * 100,
+    };
+  });
+}
+
+function FailLaugh() {
+  const [tick, setTick] = useState(0);
+  const [reduce, setReduce] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setReduce(mq.matches);
+    const onChange = () => setReduce(mq.matches);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+
+  useEffect(() => {
+    if (reduce) return;
+    const id = window.setInterval(() => setTick((n) => n + 1), 95);
+    return () => window.clearInterval(id);
+  }, [reduce]);
+
+  const letters = useMemo(() => failFrame(tick), [tick]);
+  const frame = letters.map((l) => l.ch).join("");
+
+  if (reduce) {
+    return (
+      <p className="font-mono text-4xl font-semibold tracking-[0.12em] text-danger md:text-6xl">
+        hahaha
+      </p>
+    );
+  }
+
+  return (
+    <p
+      className="hahaha-fail font-display text-5xl font-semibold tracking-tight text-danger md:text-7xl"
+      aria-label="hahaha"
+      data-text={frame}
+    >
+      <span className="hahaha-rgb hahaha-rgb-c" aria-hidden>
+        {frame}
+      </span>
+      <span className="hahaha-rgb hahaha-rgb-m" aria-hidden>
+        {frame}
+      </span>
+      <span className="hahaha-word">
+        {letters.map((l, i) => (
+          <span
+            key={i}
+            className="hahaha-ch"
+            style={{
+              fontFamily: l.face,
+              fontWeight: l.weight,
+              transform: `translateY(${l.y}px) skewX(${l.skew}deg) rotate(${l.rotate}deg) scaleY(${l.scaleY})`,
+            }}
+          >
+            {l.ch}
+          </span>
+        ))}
+      </span>
+    </p>
+  );
+}
+
 export function PanicOverlay({
   open,
   onClose,
@@ -95,14 +196,7 @@ export function PanicOverlay({
     >
       <div className="emergency-wash pointer-events-none absolute inset-0" />
       <div className="relative max-w-2xl text-center">
-        <p
-          className={cn(
-            "font-display text-4xl font-semibold tracking-tight text-danger md:text-6xl",
-            beat >= 1 && "glitch-once",
-          )}
-        >
-          hahaha
-        </p>
+        <FailLaugh />
         {beat >= 1 ? (
           <p className="mt-4 font-display text-2xl font-semibold text-fg md:text-4xl">
             você ainda não aprendeu?

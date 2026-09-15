@@ -23,6 +23,13 @@ jobs:
         with:
           node-version: "22"
           cache: npm
+      - name: Hide published Pages files from Vite
+        run: |
+          mkdir -p /tmp/pages-pub
+          for f in index.html 404.html .nojekyll; do
+            if [ -f "$f" ]; then mv "$f" /tmp/pages-pub/; fi
+          done
+          if [ -d assets ]; then mv assets /tmp/pages-pub/assets; fi
       - run: npm ci
       - run: npm run build:pages
         env:

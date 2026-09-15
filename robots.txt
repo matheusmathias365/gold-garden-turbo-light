@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+# Treino educacional. Sem coleta de dados.

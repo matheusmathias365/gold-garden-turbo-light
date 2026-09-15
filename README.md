@@ -2,33 +2,13 @@
 
 **Você já ia clicar. Agora você treina.**
 
+## [▶ JOGAR AGORA](https://matheusmathias365.github.io/gold-garden-turbo-light/)
+
+O clique acima abre o **jogo no navegador**. Sem caixa. Sem envio. Sem cadastro.
+
 Jogo-treino online de cibersegurança. Mini curso interativo para reconhecer phishing — SMS, e-mail, PIX, QR e voz — sem montar golpe nenhum.
 
-Jogo no navegador. Sem caixa. Sem envio. Sem cadastro.
-
-**Jogar agora:** [matheusmathias365.github.io/gold-garden-turbo-light](https://matheusmathias365.github.io/gold-garden-turbo-light/)
-
 ![Operação Phishing](public/og.jpg)
-
----
-
-## Por que o GitHub mostrou o README e não o site
-
-O GitHub Pages, se ligado em **Deploy from a branch** (pasta raiz do `main`), procura um `index.html` na raiz. Este repositório é o **código-fonte**. Na raiz só existe o README — então o GitHub mostra o README.
-
-O jogo precisa ser **compilado**. O workflow `GitHub Pages` faz isso. Troque a origem:
-
-1. Abra o repositório no GitHub.
-2. **Settings** (aba de cima).
-3. No menu esquerdo: **Pages**.
-4. Em **Build and deployment** → **Source**, escolha **GitHub Actions**.
-   - Não deixe **Deploy from a branch**.
-5. Se o GitHub pedir para aceitar o ambiente `github-pages`, aceite.
-6. Abra a aba **Actions**. Espere o workflow **GitHub Pages** ficar verde.
-   - Se não rodou sozinho: **Actions** → **GitHub Pages** → **Run workflow**.
-7. Abra: [https://matheusmathias365.github.io/gold-garden-turbo-light/](https://matheusmathias365.github.io/gold-garden-turbo-light/)
-
-A primeira publicação leva 1–3 minutos. Se a página ainda mostrar o README, atualize com Ctrl+F5 (cache) e confira se o Source está mesmo em GitHub Actions.
 
 ---
 

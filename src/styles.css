@@ -364,6 +364,150 @@ p {
 .glitch-once {
   animation: glitch-shift 180ms steps(2) 3;
 }
+/* hahaha: fonte falhada em loop — rasterizer quebrado, não um glitch de 200ms */
+.hahaha-fail {
+  position: relative;
+  display: inline-block;
+  font-kerning: none;
+  font-synthesis: none;
+  letter-spacing: 0.04em;
+  line-height: 0.86;
+  text-shadow:
+    -2px 0 #1ee0ff,
+    2px 0 #ff2a2a,
+    0 0 28px rgb(229 72 77 / 0.55);
+  animation: hahaha-jitter 90ms steps(2) infinite;
+}
+.hahaha-word {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: baseline;
+  justify-content: center;
+}
+.hahaha-ch {
+  display: inline-block;
+  min-width: 0.55em;
+  transform-origin: 50% 70%;
+  animation: hahaha-ch 260ms steps(2) infinite;
+}
+.hahaha-ch:nth-child(2) {
+  animation-duration: 180ms;
+  animation-delay: 30ms;
+}
+.hahaha-ch:nth-child(3) {
+  animation-duration: 320ms;
+  animation-delay: 70ms;
+}
+.hahaha-ch:nth-child(4) {
+  animation-duration: 210ms;
+  animation-delay: 110ms;
+}
+.hahaha-ch:nth-child(5) {
+  animation-duration: 280ms;
+  animation-delay: 50ms;
+}
+.hahaha-ch:nth-child(6) {
+  animation-duration: 190ms;
+  animation-delay: 90ms;
+}
+.hahaha-rgb {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  opacity: 0.72;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+.hahaha-rgb-c {
+  color: #1ee0ff;
+  animation: hahaha-rgb-c 1.05s steps(2) infinite;
+}
+.hahaha-rgb-m {
+  color: #ff2a2a;
+  animation: hahaha-rgb-m 0.82s steps(3) infinite;
+}
+.hahaha-fail::after {
+  content: "";
+  position: absolute;
+  left: -10%;
+  right: -10%;
+  height: 16%;
+  background: rgb(229 72 77 / 0.38);
+  mix-blend-mode: screen;
+  pointer-events: none;
+  animation: hahaha-tear 1.35s steps(2) infinite;
+}
+@keyframes hahaha-jitter {
+  0% {
+    transform: translate(0, 0) skewX(0deg);
+  }
+  25% {
+    transform: translate(-3px, 1px) skewX(-3deg);
+  }
+  50% {
+    transform: translate(3px, -1px) skewX(2deg);
+  }
+  75% {
+    transform: translate(-1px, 2px) skewX(3deg);
+  }
+  100% {
+    transform: translate(0, 0) skewX(0deg);
+  }
+}
+@keyframes hahaha-ch {
+  0%,
+  100% {
+    filter: none;
+  }
+  40% {
+    filter: contrast(1.6) saturate(1.8);
+  }
+  70% {
+    filter: blur(0.4px) contrast(1.2);
+  }
+}
+@keyframes hahaha-rgb-c {
+  0%,
+  100% {
+    clip-path: inset(0 0 68% 0);
+    transform: translate(-5px, 0);
+  }
+  50% {
+    clip-path: inset(38% 0 8% 0);
+    transform: translate(6px, -2px);
+  }
+}
+@keyframes hahaha-rgb-m {
+  0%,
+  100% {
+    clip-path: inset(52% 0 0 0);
+    transform: translate(5px, 0);
+  }
+  40% {
+    clip-path: inset(6% 0 48% 0);
+    transform: translate(-7px, 1px);
+  }
+}
+@keyframes hahaha-tear {
+  0% {
+    top: 8%;
+  }
+  35% {
+    top: 58%;
+  }
+  70% {
+    top: 22%;
+  }
+  100% {
+    top: 74%;
+  }
+}
 .phone-in {
   animation: phone-in 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
@@ -500,6 +644,11 @@ summary::-webkit-details-marker {
   .glow-cta,
   .zero-flash,
   .glitch-once,
+  .hahaha-fail,
+  .hahaha-ch,
+  .hahaha-rgb-c,
+  .hahaha-rgb-m,
+  .hahaha-fail::after,
   .bar-fill,
   .satellite,
   .satellite-2,
