@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState, type MouseEvent, type ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
+import { Volume2, VolumeX } from "lucide-react";
 import { CERT_LEGAL } from "@/lib/certificate";
 import {
   PhishingAttack,
@@ -228,6 +229,7 @@ function Hero({ reduce }: { reduce: boolean }) {
 function Teaser({ reduce }: { reduce: boolean }) {
   const ref = useRef<HTMLVideoElement>(null);
   const [needPlay, setNeedPlay] = useState(reduce);
+  const [muted, setMuted] = useState(true);
 
   useEffect(() => {
     const v = ref.current;
@@ -245,6 +247,15 @@ function Teaser({ reduce }: { reduce: boolean }) {
     io.observe(v);
     return () => io.disconnect();
   }, [reduce]);
+
+  function toggleSound() {
+    const v = ref.current;
+    if (!v) return;
+    const next = !muted;
+    v.muted = next;
+    setMuted(next);
+    v.play().catch(() => setNeedPlay(true));
+  }
 
   return (
     <section id="arquivo" className="land-section">
@@ -264,7 +275,7 @@ function Teaser({ reduce }: { reduce: boolean }) {
           <video
             ref={ref}
             className="aspect-video w-full bg-bg object-cover"
-            muted
+            muted={muted}
             loop
             playsInline
             preload="metadata"
@@ -272,18 +283,25 @@ function Teaser({ reduce }: { reduce: boolean }) {
             controls={needPlay}
             aria-label="Teaser Operação Phishing. Simulação. Ninguém é atingido."
           >
-            <source src={assetUrl("teaser.mp4")} type="video/mp4" />
+            <source src={`${assetUrl("teaser.mp4")}?v=2`} type="video/mp4" />
           </video>
+          <button
+            type="button"
+            onClick={toggleSound}
+            className="absolute bottom-3 left-3 z-10 inline-flex min-h-11 items-center gap-2 rounded-sm border border-border bg-bg/80 px-3 font-mono text-[10px] tracking-[0.18em] text-fg backdrop-blur-sm hover:border-accent hover:text-accent"
+            aria-pressed={!muted}
+            aria-label={muted ? "Ligar som" : "Desligar som"}
+          >
+            {muted ? <VolumeX className="size-4" /> : <Volume2 className="size-4 text-accent" />}
+            {muted ? "LIGAR SOM" : "SOM LIGADO"}
+          </button>
           <span className="pointer-events-none absolute left-3 top-3 hidden font-mono text-[10px] tracking-[0.22em] text-accent sm:block">
             ARQUIVO 01
-          </span>
-          <span className="pointer-events-none absolute bottom-4 right-4 hidden rotate-[-12deg] border border-danger/80 px-2 py-1 font-mono text-[10px] tracking-[0.2em] text-danger sm:block">
-            CONFIDENCIAL
           </span>
         </div>
 
         <p className="mt-4 font-mono text-[10px] tracking-[0.18em] text-dim">
-          41s · simulação · silêncio nesta página · ninguém é atingido
+          41s · toque em ligar som · simulação · ninguém é atingido
         </p>
         <div className="mt-6">
           <Link to="/jogar">
