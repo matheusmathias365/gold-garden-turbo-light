@@ -1,0 +1,19 @@
+# GitHub Pages: publish the compiled game, don't run Jekyll converters
+# on Tailwind CSS or hashed JS. Prefer .nojekyll; this is the fallback.
+include:
+  - g
+  - voz
+  - __grok
+  - index.html
+  - 404.html
+exclude:
+  - node_modules
+  - src
+  - .grok
+  - dist
+  - attachments
+  - screenshots
+  - server
+  - migrations
+  - scripts
+  - .github
