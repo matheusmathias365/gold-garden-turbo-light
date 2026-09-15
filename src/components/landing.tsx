@@ -7,7 +7,7 @@ import {
   type AttackStep,
 } from "@/components/phishing-attack";
 import { Btn } from "@/components/ui";
-import { PanicButton, PanicOverlay, RedGlyphTrail } from "@/components/danger-fx";
+import { PanicButton, PanicOverlay, RedGlyphTrail, FailWord } from "@/components/danger-fx";
 import { assetUrl, cn } from "@/lib/utils";
 import { sanitizeCallsign } from "@/lib/safe";
 
@@ -99,9 +99,23 @@ function TickerLand() {
 
 function Hero({ reduce }: { reduce: boolean }) {
   const [step, setStep] = useState<AttackStep>("notify");
+  const [titleHot, setTitleHot] = useState(false);
+  const hoverRef = useRef(false);
   const onStep = useCallback((s: AttackStep) => setStep(s), []);
   const hot = step === "click" || step === "dump" || step === "ranked";
   const safe = step === "soc";
+
+  useEffect(() => {
+    if (reduce) return;
+    const id = window.setInterval(() => {
+      if (hoverRef.current) return;
+      setTitleHot(true);
+      window.setTimeout(() => {
+        if (!hoverRef.current) setTitleHot(false);
+      }, 640);
+    }, 4200);
+    return () => window.clearInterval(id);
+  }, [reduce]);
 
   return (
     <section id="inicio" className="relative min-h-[calc(100dvh-96px)] overflow-hidden">
@@ -123,10 +137,30 @@ function Hero({ reduce }: { reduce: boolean }) {
           <p className="font-mono text-[10px] tracking-[0.28em] text-danger">
             CASO #001 · SOC v2.4 · TREINO EDUCACIONAL
           </p>
-          <h1 className="mt-5 font-display text-6xl font-semibold leading-[0.88] tracking-tight md:text-8xl">
-            Operação
-            <br />
-            <span className="text-accent">Phishing</span>
+          <h1
+            className="mt-5 flex flex-col items-start font-display text-6xl font-semibold leading-none tracking-tight md:text-8xl"
+            onMouseEnter={() => {
+              hoverRef.current = true;
+              setTitleHot(true);
+            }}
+            onMouseLeave={() => {
+              hoverRef.current = false;
+              setTitleHot(false);
+            }}
+          >
+            <span className="block">
+              <FailWord text="Operação" reduce={reduce} hot={titleHot} align="start" tone="fg" />
+            </span>
+            <span className="block">
+              <FailWord
+                text="Phishing"
+                reduce={reduce}
+                hot={titleHot}
+                align="start"
+                tone="accent"
+                className="text-accent"
+              />
+            </span>
           </h1>
           <p className="mt-6 text-xl md:text-2xl">Você já ia clicar.</p>
           <p className="mt-3 max-w-md text-sm leading-relaxed text-muted">

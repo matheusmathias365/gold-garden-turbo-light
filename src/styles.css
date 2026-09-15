@@ -443,6 +443,62 @@ p {
   pointer-events: none;
   animation: hahaha-tear 1.35s steps(2) infinite;
 }
+/* título da land: o mesmo raster quebrado, alinhado à esquerda, um pouco mais calmo */
+.title-fail {
+  display: block !important;
+  position: relative;
+  width: max-content;
+  overflow: hidden;
+  line-height: 1.02;
+  padding-bottom: 0.08em;
+  animation: title-fail-jitter 1.8s steps(2) infinite;
+  text-shadow:
+    -1px 0 #1ee0ff,
+    1px 0 rgb(229 72 77 / 0.7),
+    0 0 18px rgb(229 72 77 / 0.28);
+}
+.title-fail .hahaha-ch {
+  min-width: 0;
+}
+@keyframes title-fail-jitter {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  40% {
+    transform: translate(-1px, 0);
+  }
+  75% {
+    transform: translate(1px, 1px);
+  }
+}
+.title-fail .hahaha-rgb {
+  justify-content: flex-start;
+  opacity: 0.38;
+  overflow: hidden;
+}
+.title-fail .hahaha-word {
+  justify-content: flex-start;
+  line-height: 1;
+}
+.title-fail-accent {
+  text-shadow:
+    -1px 0 #1ee0ff,
+    1px 0 #3dcf7a,
+    0 0 22px rgb(61 207 122 / 0.45);
+}
+.title-fail-accent::after {
+  background: rgb(61 207 122 / 0.28);
+}
+.title-fail-fg {
+  text-shadow:
+    -1px 0 #1ee0ff,
+    1px 0 rgb(215 239 224 / 0.35),
+    0 0 16px rgb(61 207 122 / 0.18);
+}
+.title-fail-fg::after {
+  background: rgb(229 72 77 / 0.22);
+}
 @keyframes hahaha-jitter {
   0% {
     transform: translate(0, 0) skewX(0deg);
@@ -649,6 +705,8 @@ summary::-webkit-details-marker {
   .hahaha-rgb-c,
   .hahaha-rgb-m,
   .hahaha-fail::after,
+  .title-fail,
+  .title-fail-jitter,
   .bar-fill,
   .satellite,
   .satellite-2,

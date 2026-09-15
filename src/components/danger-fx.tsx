@@ -61,8 +61,36 @@ const FACE = [
   "cursive",
 ];
 
-const GLYPH_H = ["h", "H", "ħ", "н", "ĥ", "ʜ", "#", "𝔥"];
-const GLYPH_A = ["a", "A", "α", "а", "@", "4", "å", "ä"];
+const LOOKALIKES: Record<string, string[]> = {
+  a: ["a", "A", "α", "а", "@", "4", "å"],
+  b: ["b", "B", "ß", "8"],
+  c: ["c", "C", "с", "ç"],
+  ç: ["ç", "c", "C", "ç"],
+  d: ["d", "D", "đ"],
+  e: ["e", "E", "ε", "е", "3"],
+  f: ["f", "F"],
+  g: ["g", "G", "9"],
+  h: ["h", "H", "ħ", "н", "ĥ", "#"],
+  i: ["i", "I", "í", "1", "|"],
+  j: ["j", "J"],
+  k: ["k", "K"],
+  l: ["l", "L", "1", "|"],
+  m: ["m", "M"],
+  n: ["n", "N", "η"],
+  o: ["o", "O", "0", "ο", "о", "ø"],
+  p: ["p", "P", "ρ", "р"],
+  q: ["q", "Q"],
+  r: ["r", "R", "г"],
+  s: ["s", "S", "$", "5"],
+  t: ["t", "T", "т"],
+  u: ["u", "U", "υ"],
+  v: ["v", "V"],
+  w: ["w", "W"],
+  x: ["x", "X", "×"],
+  y: ["y", "Y", "¥"],
+  z: ["z", "Z", "2"],
+  ã: ["ã", "a", "á", "@", "Ã"],
+};
 
 type FailCh = {
   ch: string;
@@ -74,57 +102,65 @@ type FailCh = {
   weight: number;
 };
 
-function failFrame(tick: number): FailCh[] {
-  return Array.from({ length: 6 }, (_, i) => {
-    const pool = i % 2 === 0 ? GLYPH_H : GLYPH_A;
-    const real = i % 2 === 0 ? "h" : "a";
-    const corrupt = (tick + i * 3) % 4 !== 1;
-    const g = pool[(tick + i * 2) % pool.length] ?? real;
+function wordFrame(text: string, tick: number, hot: boolean): FailCh[] {
+  const brand = '"Space Grotesk", ui-sans-serif, system-ui, sans-serif';
+  return Array.from(text, (raw, i) => {
+    const key = raw.toLowerCase();
+    const pool = LOOKALIKES[key] ?? [raw];
+    const corrupt = hot && (tick + i) % 3 !== 1;
+    const pick = pool[(tick + i * 2) % pool.length] ?? raw;
     return {
-      ch: corrupt ? g : real,
-      face: FACE[(tick + i * 2) % FACE.length] ?? FACE[0]!,
-      scaleY: 0.68 + ((tick + i * 5) % 7) * 0.12,
-      y: ((tick * 3 + i * 11) % 13) - 6,
-      skew: ((tick + i * 7) % 17) - 8,
-      rotate: ((tick * 2 + i * 5) % 11) - 5,
-      weight: 500 + ((tick + i) % 3) * 100,
+      ch: corrupt ? pick : raw,
+      face: corrupt ? (FACE[(tick + i * 2) % FACE.length] ?? FACE[0]!) : brand,
+      scaleY: corrupt ? 0.72 + ((tick + i * 5) % 6) * 0.1 : 1,
+      y: corrupt ? ((tick * 3 + i * 11) % 11) - 5 : 0,
+      skew: corrupt ? ((tick + i * 7) % 13) - 6 : 0,
+      rotate: corrupt ? ((tick * 2 + i * 5) % 9) - 4 : 0,
+      weight: corrupt ? 500 + ((tick + i) % 3) * 100 : 600,
     };
   });
 }
 
-function FailLaugh() {
+export function FailWord({
+  text,
+  reduce,
+  hot = true,
+  align = "center",
+  tone = "danger",
+  className,
+}: {
+  text: string;
+  reduce?: boolean;
+  hot?: boolean;
+  align?: "center" | "start";
+  tone?: "danger" | "accent" | "fg";
+  className?: string;
+}) {
   const [tick, setTick] = useState(0);
-  const [reduce, setReduce] = useState(false);
-
-  useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setReduce(mq.matches);
-    const onChange = () => setReduce(mq.matches);
-    mq.addEventListener("change", onChange);
-    return () => mq.removeEventListener("change", onChange);
-  }, []);
 
   useEffect(() => {
     if (reduce) return;
-    const id = window.setInterval(() => setTick((n) => n + 1), 95);
+    const id = window.setInterval(() => setTick((n) => n + 1), hot ? 95 : 160);
     return () => window.clearInterval(id);
-  }, [reduce]);
+  }, [reduce, hot]);
 
-  const letters = useMemo(() => failFrame(tick), [tick]);
+  const letters = useMemo(() => wordFrame(text, tick, hot && !reduce), [text, tick, hot, reduce]);
   const frame = letters.map((l) => l.ch).join("");
 
   if (reduce) {
-    return (
-      <p className="font-mono text-4xl font-semibold tracking-[0.12em] text-danger md:text-6xl">
-        hahaha
-      </p>
-    );
+    return <span className={className}>{text}</span>;
   }
 
   return (
-    <p
-      className="hahaha-fail font-display text-5xl font-semibold tracking-tight text-danger md:text-7xl"
-      aria-label="hahaha"
+    <span
+      className={cn(
+        "hahaha-fail",
+        align === "start" && "title-fail",
+        tone === "accent" && "title-fail-accent",
+        tone === "fg" && "title-fail-fg",
+        className,
+      )}
+      aria-label={text}
       data-text={frame}
     >
       <span className="hahaha-rgb hahaha-rgb-c" aria-hidden>
@@ -136,7 +172,7 @@ function FailLaugh() {
       <span className="hahaha-word">
         {letters.map((l, i) => (
           <span
-            key={i}
+            key={`${text}-${i}`}
             className="hahaha-ch"
             style={{
               fontFamily: l.face,
@@ -148,7 +184,17 @@ function FailLaugh() {
           </span>
         ))}
       </span>
-    </p>
+    </span>
+  );
+}
+
+function FailLaugh() {
+  return (
+    <FailWord
+      text="hahaha"
+      hot
+      className="font-display text-5xl font-semibold tracking-tight text-danger md:text-7xl"
+    />
   );
 }
 
