@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, Navigate } from "@tanstack/react-router";
 import { ArrowLeft, ArrowRight, Check, Lock } from "lucide-react";
 import { AgentCertificate } from "@/components/certificate";
+import { Medal, MedalAward } from "@/components/medal";
 import { Btn, Callout } from "@/components/ui";
 import {
   ELO_EVIDENCE,
@@ -70,11 +71,12 @@ function EloIndex() {
       </h1>
       <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted">
         Relatório interno. Uma funcionária recebeu ligação de quem dizia ser o
-        suporte de TI. Ela desconfiou. Depois acreditou. Como o atacante ganhou
-        a confiança? Reconhecer a armadilha — nunca montá-la.
+        suporte de TI: atividade suspeita na conta. Ela desconfiou. Depois
+        acreditou. Como o atacante ganhou a confiança? Reconhecer a armadilha —
+        nunca montá-la.
       </p>
       <p className="mt-2 font-mono text-xs text-dim">
-        {n}/{ELO_IDS.length} evidências
+        {n}/{ELO_IDS.length} evidências · lacre da voz
       </p>
 
       <ul className="mt-6 divide-y divide-border overflow-hidden rounded-lg bg-surface shadow-panel">
@@ -121,6 +123,7 @@ function EloIndex() {
 
       {closed ? (
         <div className="mt-10 space-y-8">
+          <MedalAward id="x" />
           <Finale />
           <AgentCertificate
             callsign={callsign}
@@ -198,7 +201,9 @@ function EloView({ ev }: { ev: EloEv }) {
           {ev.lines.map((l, i) => (
             <li key={`${ev.id}-${i}`}>
               {l.who === "nota" ? (
-                <p className="font-mono text-[11px] leading-relaxed text-danger">{l.t}</p>
+                <p className="font-mono text-[11px] leading-relaxed text-danger">
+                  {l.t}
+                </p>
               ) : (
                 <>
                   <p className="font-mono text-[10px] tracking-[0.16em] text-accent">
@@ -253,12 +258,8 @@ function EloView({ ev }: { ev: EloEv }) {
         <div className="mt-4">
           <Callout
             tone="warn"
-            title="Aula do erro."
-            text={
-              pick && ev.miss[pick]
-                ? ev.miss[pick]
-                : "Leia a transcrição de novo. A técnica está no tom, não só na frase."
-            }
+            title="Ainda não."
+            text="Leia a transcrição de novo. A técnica está no tom, não só na frase."
           />
         </div>
       ) : null}
@@ -288,7 +289,7 @@ function Finale() {
   return (
     <section className="rounded-lg border border-accent/40 bg-surface p-5 shadow-panel">
       <p className="font-mono text-[10px] tracking-[0.22em] text-accent">
-        INVESTIGAÇÃO CONCLUÍDA · NÃO FOI UM QUIZ
+        INVESTIGAÇÃO CONCLUÍDA
       </p>
       <p className="mt-3 font-display text-2xl font-semibold tracking-tight">
         O atacante não precisou invadir o sistema.
@@ -296,18 +297,8 @@ function Finale() {
         Ele tentou convencer uma pessoa a abrir a porta.
       </p>
       <p className="mt-4 text-sm leading-relaxed text-muted">
-        Você não “acertou perguntas”. Leu uma conversa como quem defende
-        alguém. O que fica:
-      </p>
-      <ul className="mt-4 space-y-2 text-sm leading-relaxed text-muted">
-        <li>Autoridade se apresenta. Você confere o ramal que já usa.</li>
-        <li>Pedido pequeno não é inofensivo — é o primeiro degrau.</li>
-        <li>Urgência existe para você não ligar de volta.</li>
-        <li>Quem completa a frase do atacante entrega a informação.</li>
-      </ul>
-      <p className="mt-5 text-sm leading-relaxed text-fg">
         O elo mais fraco não é necessariamente uma pessoa. É o momento em que
-        alguém decide sob pressão, sem verificar.
+        alguém decide sob pressão, sem verificar a informação.
       </p>
       <p className="mt-6 font-mono text-[10px] tracking-[0.2em] text-dim">
         TÉCNICAS IDENTIFICADAS
@@ -322,6 +313,11 @@ function Finale() {
           </li>
         ))}
       </ul>
+      <p className="mt-6 text-xs leading-relaxed text-dim">
+        Treino. Não ensina a se passar por TI, não ensina a clonar voz, não
+        ensina a montar o golpe. Ensina a ouvir a ligação e desligar — e ligar
+        no ramal que você já usa.
+      </p>
     </section>
   );
 }
@@ -337,7 +333,13 @@ export function XpMeter() {
   );
 }
 
-export function SecretFile({ done, open }: { done: boolean; open: boolean }) {
+export function SecretFile({
+  done,
+  open,
+}: {
+  done: boolean;
+  open: boolean;
+}) {
   if (open) {
     return (
       <li>
@@ -353,6 +355,11 @@ export function SecretFile({ done, open }: { done: boolean; open: boolean }) {
               {done ? "ARQUIVADO" : "ACESSO AUTORIZADO"}
             </span>
           </div>
+          {done ? (
+            <div className="mt-3 flex justify-end">
+              <Medal id="x" size="sm" earned />
+            </div>
+          ) : null}
           <h2 className="mt-3 font-display text-2xl font-semibold tracking-tight">
             O elo mais fraco
           </h2>
@@ -375,7 +382,9 @@ export function SecretFile({ done, open }: { done: boolean; open: boolean }) {
     <li>
       <div className="rounded-lg border border-border/80 bg-bg-elevated p-5">
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <p className="font-mono text-[10px] tracking-[0.2em] text-dim">ARQUIVO X</p>
+          <p className="font-mono text-[10px] tracking-[0.2em] text-dim">
+            ARQUIVO X
+          </p>
           <span className="inline-flex items-center gap-1 font-mono text-[10px] tracking-[0.16em] text-dim">
             <Lock className="size-3" /> ACESSO NEGADO
           </span>
@@ -387,7 +396,8 @@ export function SecretFile({ done, open }: { done: boolean; open: boolean }) {
           REQUISITO · ARQUIVAR CASO #004 · A VOZ
         </p>
         <p className="mt-3 text-xs leading-relaxed text-dim">
-          O lacre fecha com o XP da voz. Sem conta, sem ranking.
+          O lacre fecha com o XP da voz. Sem conta, sem ranking. Só esta
+          investigação.
         </p>
       </div>
     </li>

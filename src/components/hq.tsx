@@ -6,10 +6,11 @@ import { Btn, Rail } from "@/components/ui";
 import { LegalNotice } from "@/components/legal-notice";
 import { CrtFrame, Ticker, AppHeader } from "@/components/shell";
 import { SecretFile } from "@/components/elo-stage";
-import { ArchiveLog, CaseTrail, UnlockX, cinemaPending, markCinemaSeen } from "@/components/ops-fx";
+import { MedalRack, Medal } from "@/components/medal";
 import { xOpen, xVisible } from "@/lib/session-xp";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { cn } from "@/lib/utils";
+import type { MedalId } from "@/lib/medals";
 
 export function Hq() {
   const completed = useProgress((s) => s.completed);
@@ -18,7 +19,6 @@ export function Hq() {
   const qrAt = useProgress((s) => s.qrAt);
   const vozAt = useProgress((s) => s.vozAt);
   const xAt = useProgress((s) => s.xAt);
-  const [cinema, setCinema] = useState(false);
   const [confirmReset, setConfirmReset] = useState(false);
 
   const dossie = countDone(completed, ALL_IDS);
@@ -28,16 +28,12 @@ export function Hq() {
   const xDone = completed.includes(X_CASE_ID) || Boolean(xAt);
   const showX = xVisible(qr, voz, xDone);
   const openX = xOpen(voz, xDone);
-
-  useEffect(() => {
-    if (openX && !xDone && cinemaPending()) setCinema(true);
-  }, [openX, xDone]);
-
-  const trail = [
-    { n: "#001", label: "olho", done: dossie === ALL_IDS.length, current: dossie < ALL_IDS.length },
-    { n: "#002", label: "pressa", done: plantao, current: dossie === ALL_IDS.length && !plantao },
-    { n: "#003", label: "QR", done: qr, current: plantao && !qr },
-    { n: "#004", label: "voz", done: voz, current: qr && !voz },
+  const medals: MedalId[] = [
+    ...(dossie === ALL_IDS.length ? (["001"] as const) : []),
+    ...(plantao ? (["002"] as const) : []),
+    ...(qr ? (["003"] as const) : []),
+    ...(voz ? (["004"] as const) : []),
+    ...(xDone ? (["x"] as const) : []),
   ];
 
   return (
@@ -60,7 +56,7 @@ export function Hq() {
           <LegalNotice />
         </div>
 
-        <CaseTrail steps={trail} />
+        <MedalRack earned={medals} showX={showX} />
 
         <ul className="mt-8 space-y-4">
           <FileCard
@@ -72,6 +68,7 @@ export function Hq() {
             body="SMS, e-mail, PIX do “chefe”, página gêmea, prêmio. Briefing, laboratório A–F, desafios e o protocolo se você já clicou."
             done={dossie}
             max={ALL_IDS.length}
+            medal="001"
             open
           />
           <FileCard
@@ -83,6 +80,7 @@ export function Hq() {
             body="Turno de 90 segundos. Fila de 8 recados — WhatsApp, SMS, e-mail, notificação. Arquivar como golpe, canal oficial ou ignorar. Cada plantão embaralha."
             done={plantao ? 1 : 0}
             max={1}
+            medal="002"
             open
           />
           <FileCard
@@ -94,6 +92,7 @@ export function Hq() {
             body="Cardápio, pedágio, PIX da mesa. Toque no QR, leia o destino, compare com o carimbo. Não pague nesta tela."
             done={qr ? 1 : 0}
             max={1}
+            medal="003"
             open
           />
           <FileCard
@@ -105,6 +104,7 @@ export function Hq() {
             body="Áudio curto. A voz pode parecer a da chefe, do pai, do banco. Deepfake cobre o timbre — não o ramal. Ligar no número oficial. Nunca transferir no susto."
             done={voz ? 1 : 0}
             max={1}
+            medal="004"
             open
           />
           {showX ? <SecretFile done={xDone} open={openX} /> : null}
@@ -114,14 +114,6 @@ export function Hq() {
           <p className="mt-6 text-sm text-muted">
             Alguns arquivos exigem um nível maior de investigação. Arquive a voz.
           </p>
-        ) : null}
-
-        {xDone ? (
-          <ArchiveLog
-            code="X-001"
-            title="O que fica não é o diploma."
-            nextHint="Você leu a ligação como quem defende. Autoridade, pedido pequeno, relógio, a vítima completando a frase. O momento — não a pessoa."
-          />
         ) : null}
 
         <p className="mt-8 font-mono text-[10px] tracking-widest text-dim">
@@ -153,17 +145,6 @@ export function Hq() {
           )}
         </div>
       </main>
-      <UnlockX
-        open={cinema}
-        onOpen={() => {
-          markCinemaSeen();
-          setCinema(false);
-        }}
-        onStay={() => {
-          markCinemaSeen();
-          setCinema(false);
-        }}
-      />
     </CrtFrame>
   );
 }
@@ -179,6 +160,7 @@ function FileCard({
   max,
   open,
   sealed,
+  medal,
 }: {
   to?: "/dossie" | "/plantao" | "/qr" | "/voz";
   code: string;
@@ -190,7 +172,9 @@ function FileCard({
   max?: number;
   open?: boolean;
   sealed?: boolean;
+  medal?: MedalId;
 }) {
+  const won = Boolean(medal && max != null && done != null && done >= max);
   const inner = (
     <>
       <div className="flex flex-wrap items-center justify-between gap-2">
@@ -200,6 +184,11 @@ function FileCard({
         {sealed ? (
           <span className="inline-flex items-center gap-1 font-mono text-[10px] tracking-[0.16em] text-dim">
             <Lock className="size-3" /> EM BREVE
+          </span>
+        ) : won && medal ? (
+          <span className="inline-flex items-center gap-2 font-mono text-[10px] tracking-[0.16em] text-accent">
+            CONQUISTADO
+            <Medal id={medal} size="sm" earned />
           </span>
         ) : (
           <span className="font-mono text-[10px] tracking-[0.16em] text-accent">

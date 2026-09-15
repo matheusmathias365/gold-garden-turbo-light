@@ -645,6 +645,178 @@ p {
   clip-path: inset(20% 0 20% 0);
 }
 
+.medal-scene {
+  perspective: 720px;
+  perspective-origin: 50% 42%;
+  width: 10rem;
+  height: 10rem;
+}
+.medal-scene-sm {
+  width: 3.5rem;
+  height: 3.5rem;
+}
+.medal {
+  --medal-r: 5rem;
+  --medal-t: 0.55rem;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transform: rotateX(18deg) rotateY(-28deg);
+}
+.medal.is-spin {
+  animation: medal-turn 11s linear infinite;
+}
+.medal-scene:hover .medal.is-spin {
+  animation-duration: 4.5s;
+}
+.medal-sm {
+  --medal-r: 1.75rem;
+  --medal-t: 0.28rem;
+}
+.medal-face {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.medal-front {
+  transform: translateZ(var(--medal-t));
+}
+.medal-back {
+  transform: rotateY(180deg) translateZ(var(--medal-t));
+}
+.medal-ring {
+  position: absolute;
+  inset: 9%;
+  border-radius: 50%;
+  border: 1px solid color-mix(in oklab, var(--medal-ink) 45%, transparent);
+  pointer-events: none;
+}
+.medal-core {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  color: var(--medal-ink);
+  text-shadow: 0 1px 0 rgb(0 0 0 / 0.35);
+}
+.medal-series {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.18em;
+}
+.medal-sm .medal-series {
+  font-size: 0.38rem;
+  letter-spacing: 0.12em;
+}
+.medal-vector {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  line-height: 1;
+}
+.medal-sm .medal-vector {
+  font-size: 0.55rem;
+}
+.medal-edge {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--medal-t);
+  height: calc(var(--medal-r) * 2);
+  margin-top: calc(var(--medal-r) * -1);
+  margin-left: calc(var(--medal-t) / -2);
+  background: var(--medal-edge);
+  transform: rotateY(var(--a)) translateZ(var(--medal-r));
+}
+.medal-001 {
+  --medal-ink: #07140c;
+  --medal-edge: color-mix(in oklab, var(--color-accent) 55%, #041008);
+}
+.medal-001 .medal-face {
+  background: radial-gradient(
+    circle at 32% 28%,
+    color-mix(in oklab, var(--color-accent) 55%, white),
+    var(--color-accent) 42%,
+    #0a2816 78%
+  );
+  box-shadow: inset 0 0 0 3px color-mix(in oklab, var(--color-accent) 40%, #041008);
+}
+.medal-002 {
+  --medal-ink: #1a1204;
+  --medal-edge: color-mix(in oklab, var(--color-warn) 55%, #1a1204);
+}
+.medal-002 .medal-face {
+  background: radial-gradient(
+    circle at 32% 28%,
+    color-mix(in oklab, var(--color-warn) 60%, white),
+    var(--color-warn) 44%,
+    #3a2a0c 78%
+  );
+  box-shadow: inset 0 0 0 3px color-mix(in oklab, var(--color-warn) 40%, #1a1204);
+}
+.medal-003 {
+  --medal-ink: #0c1210;
+  --medal-edge: color-mix(in oklab, var(--color-fg) 40%, #1c2c24);
+}
+.medal-003 .medal-face {
+  background: radial-gradient(
+    circle at 32% 28%,
+    color-mix(in oklab, var(--color-fg) 75%, white),
+    var(--color-muted) 48%,
+    #1a2820 80%
+  );
+  box-shadow: inset 0 0 0 3px color-mix(in oklab, var(--color-fg) 25%, #0c1210);
+}
+.medal-004 {
+  --medal-ink: #140808;
+  --medal-edge: color-mix(in oklab, var(--color-danger) 45%, #2a1010);
+}
+.medal-004 .medal-face {
+  background: radial-gradient(
+    circle at 32% 28%,
+    color-mix(in oklab, var(--color-danger) 45%, white),
+    color-mix(in oklab, var(--color-danger) 70%, var(--color-warn)) 46%,
+    #3a1414 80%
+  );
+  box-shadow: inset 0 0 0 3px color-mix(in oklab, var(--color-danger) 35%, #140808);
+}
+.medal-x {
+  --medal-ink: #f2d6d6;
+  --medal-edge: #2a0c0c;
+}
+.medal-x .medal-face {
+  background: radial-gradient(
+    circle at 32% 28%,
+    #4a1818,
+    #1a0808 55%,
+    #070404 82%
+  );
+  box-shadow: inset 0 0 0 3px color-mix(in oklab, var(--color-danger) 55%, #070404);
+}
+.medal-x .medal-core {
+  color: var(--color-danger);
+}
+.medal.is-locked {
+  filter: grayscale(1);
+  opacity: 0.38;
+  transform: rotateX(18deg) rotateY(-18deg);
+}
+
+@keyframes medal-turn {
+  from {
+    transform: rotateX(18deg) rotateY(-28deg);
+  }
+  to {
+    transform: rotateX(18deg) rotateY(332deg);
+  }
+}
+
 .land-section {
   scroll-margin-top: 5.5rem;
 }
@@ -721,7 +893,8 @@ summary::-webkit-details-marker {
   .type-line,
   .glyph-red,
   .panic-glow,
-  .emergency-wash {
+  .emergency-wash,
+  .medal.is-spin {
     animation: none !important;
   }
 }
