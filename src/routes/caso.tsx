@@ -1,7 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { RequireAgent } from "@/components/shell";
 import { AgentCertificate } from "@/components/certificate";
-import { MedalAward } from "@/components/medal";
 import { Btn, FilePanel, Stamp } from "@/components/ui";
 import { LegalNotice } from "@/components/legal-notice";
 import { CHALLENGES } from "@/lib/challenges";
@@ -60,7 +59,6 @@ function Caso() {
       </p>
 
       <div className="mt-8">
-        {ready ? <MedalAward id="001" /> : null}
         <AgentCertificate
           callsign={callsign}
           ready={ready}

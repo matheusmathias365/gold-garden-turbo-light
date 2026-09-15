@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 import { AgentCertificate } from "@/components/certificate";
-import { MedalAward } from "@/components/medal";
 import { Btn, Callout } from "@/components/ui";
 import {
   VOZ_ACTION_LABEL,
@@ -85,7 +84,6 @@ function VozIndex() {
       </ul>
       {closed ? (
         <div className="mt-10">
-          <MedalAward id="004" />
           <AgentCertificate
             callsign={callsign}
             ready

@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { ArrowLeft, Clock } from "lucide-react";
 import { AgentCertificate } from "@/components/certificate";
-import { MedalAward } from "@/components/medal";
 import { Btn, Callout } from "@/components/ui";
 import {
   ACTION_LABEL,
@@ -254,7 +253,6 @@ export function PlantaoShift() {
             </Link>
           </div>
           <div className="pt-4">
-            <MedalAward id="002" />
             <AgentCertificate
               callsign={callsign}
               ready

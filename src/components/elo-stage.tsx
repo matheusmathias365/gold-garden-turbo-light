@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Link, Navigate } from "@tanstack/react-router";
 import { ArrowLeft, ArrowRight, Check, Lock } from "lucide-react";
 import { AgentCertificate } from "@/components/certificate";
-import { Medal, MedalAward } from "@/components/medal";
 import { Btn, Callout } from "@/components/ui";
 import {
   ELO_EVIDENCE,
@@ -123,7 +122,6 @@ function EloIndex() {
 
       {closed ? (
         <div className="mt-10 space-y-8">
-          <MedalAward id="x" />
           <Finale />
           <AgentCertificate
             callsign={callsign}
@@ -355,11 +353,6 @@ export function SecretFile({
               {done ? "ARQUIVADO" : "ACESSO AUTORIZADO"}
             </span>
           </div>
-          {done ? (
-            <div className="mt-3 flex justify-end">
-              <Medal id="x" size="sm" earned />
-            </div>
-          ) : null}
           <h2 className="mt-3 font-display text-2xl font-semibold tracking-tight">
             O elo mais fraco
           </h2>

@@ -3,7 +3,6 @@ import { Link } from "@tanstack/react-router";
 import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 import QRCode from "qrcode";
 import { AgentCertificate } from "@/components/certificate";
-import { MedalAward } from "@/components/medal";
 import { Btn, Callout } from "@/components/ui";
 import {
   QR_ACTION_LABEL,
@@ -85,7 +84,6 @@ function QrIndex() {
       </ul>
       {closed ? (
         <div className="mt-10">
-          <MedalAward id="003" />
           <AgentCertificate
             callsign={callsign}
             ready
