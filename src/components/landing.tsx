@@ -37,6 +37,7 @@ export function Landing() {
       <PanicButton onClick={() => setPanic(true)} />
 
       <Nav />
+      <div className="h-16" aria-hidden />
       <TickerLand />
 
       <main className="relative z-10">
@@ -63,21 +64,21 @@ export function Landing() {
 
 function Nav() {
   return (
-    <header className="sticky top-0 z-40 border-b border-border/70 bg-bg/75 backdrop-blur-md">
-      <div className="mx-auto flex max-w-6xl items-center gap-4 px-5 py-3">
-        <a href="#inicio" className="inline-flex min-h-11 items-center font-display text-sm font-semibold tracking-tight">
+    <header className="fixed inset-x-0 top-0 z-40 border-b border-border/70 bg-bg/80 backdrop-blur-md">
+      <div className="mx-auto flex max-w-6xl items-center gap-3 px-5 py-3">
+        <a href="#inicio" className="inline-flex min-h-11 shrink-0 items-center font-display text-sm font-semibold tracking-tight">
           Operação <span className="text-accent">Phishing</span>
         </a>
-        <nav className="ml-auto hidden items-center gap-6 font-mono text-[10px] tracking-[0.18em] text-muted md:flex">
-          <a href="#golpe" className="inline-flex min-h-11 items-center hover:text-fg">O golpe</a>
-          <a href="#casos" className="inline-flex min-h-11 items-center hover:text-fg">Casos</a>
-          <a href="#lacre" className="inline-flex min-h-11 items-center hover:text-fg">Classificado</a>
-          <a href="#como" className="inline-flex min-h-11 items-center hover:text-fg">Como jogar</a>
-          <a href="#saber" className="inline-flex min-h-11 items-center hover:text-fg">Phishing</a>
-          <a href="#faq" className="inline-flex min-h-11 items-center hover:text-fg">FAQ</a>
-          <a href="#certificado" className="inline-flex min-h-11 items-center hover:text-fg">Certificado</a>
+        <nav className="ml-auto flex min-w-0 items-center gap-5 overflow-x-auto font-mono text-[10px] tracking-[0.18em] text-muted [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <a href="#golpe" className="inline-flex min-h-11 shrink-0 items-center hover:text-fg">O golpe</a>
+          <a href="#casos" className="inline-flex min-h-11 shrink-0 items-center hover:text-fg">Casos</a>
+          <a href="#lacre" className="inline-flex min-h-11 shrink-0 items-center hover:text-fg">Classificado</a>
+          <a href="#como" className="inline-flex min-h-11 shrink-0 items-center hover:text-fg">Como jogar</a>
+          <a href="#saber" className="inline-flex min-h-11 shrink-0 items-center hover:text-fg">Phishing</a>
+          <a href="#faq" className="inline-flex min-h-11 shrink-0 items-center hover:text-fg">FAQ</a>
+          <a href="#certificado" className="inline-flex min-h-11 shrink-0 items-center hover:text-fg">Certificado</a>
         </nav>
-        <Link to="/jogar">
+        <Link to="/jogar" className="shrink-0">
           <Btn className="glow-cta">Jogar</Btn>
         </Link>
       </div>
@@ -121,7 +122,7 @@ function Hero({ reduce }: { reduce: boolean }) {
   }, [reduce]);
 
   return (
-    <section id="inicio" className="relative min-h-[calc(100dvh-96px)] overflow-hidden">
+    <section id="inicio" className="relative min-h-[calc(100dvh-96px)] scroll-mt-24 overflow-hidden">
       <div
         className={cn(
           "ambient-layer pointer-events-none absolute inset-0",
@@ -1338,7 +1339,7 @@ function Footer() {
   const year = 2026;
   return (
     <footer className="relative z-10 border-t border-border/60 px-5 py-16">
-      <div className="mx-auto grid max-w-6xl gap-12 md:grid-cols-[1.15fr_1.2fr_0.95fr]">
+      <div className="mx-auto grid max-w-6xl gap-12 md:grid-cols-2">
         <div>
           <p className="font-display text-lg font-semibold tracking-tight text-fg">
             Operação <span className="text-accent">Phishing</span>
@@ -1354,50 +1355,7 @@ function Footer() {
           <p className="mt-6 font-mono text-[10px] tracking-[0.16em] text-dim">
             © {year} Operação Phishing · treino educacional
           </p>
-        </div>
-
-        <nav aria-label="Âncoras do site">
-          <p className="font-mono text-[10px] tracking-[0.22em] text-dim">
-            NO SITE
-          </p>
-          <div className="mt-4 grid grid-cols-2 gap-x-6">
-            <ul className="space-y-1 font-mono text-[11px] tracking-[0.14em] text-muted">
-              <li><a href="#inicio" className="inline-flex min-h-11 items-center hover:text-fg">Início</a></li>
-              <li><a href="#golpe" className="inline-flex min-h-11 items-center hover:text-fg">O golpe</a></li>
-              <li><a href="#casos" className="inline-flex min-h-11 items-center hover:text-fg">Casos</a></li>
-              <li><a href="#lacre" className="inline-flex min-h-11 items-center hover:text-fg">Classificado</a></li>
-              <li><a href="#como" className="inline-flex min-h-11 items-center hover:text-fg">Como jogar</a></li>
-            </ul>
-            <ul className="space-y-1 font-mono text-[11px] tracking-[0.14em] text-muted">
-              <li><a href="#saber" className="inline-flex min-h-11 items-center hover:text-fg">Phishing</a></li>
-              <li><a href="#faq" className="inline-flex min-h-11 items-center hover:text-fg">FAQ</a></li>
-              <li><a href="#certificado" className="inline-flex min-h-11 items-center hover:text-fg">Certificado</a></li>
-              <li>
-                <Link to="/jogar" className="inline-flex min-h-11 items-center text-accent hover:text-fg">
-                  Jogar agora
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </nav>
-
-        <div>
-          <p className="font-mono text-[10px] tracking-[0.22em] text-dim">
-            AVISO
-          </p>
-          <p className="mt-4 text-xs leading-relaxed text-dim">
-            Este dossiê é um material de treinamento exclusivamente educacional.
-            Seu conteúdo não apoia, não ensina nem autoriza qualquer prática
-            ilegal ou criminosa.
-          </p>
-          <p className="mt-3 text-xs leading-relaxed text-dim">
-            Fraude eletrônica: Código Penal, art. 171, § 2º-A (Lei nº 14.155/2021).
-            Invasão: art. 154-A (Lei nº 12.737/2012).
-          </p>
-          <p className="mt-4 font-mono text-[10px] tracking-[0.16em] text-muted">
-            JOGO ONLINE · SEM CAIXA · SEM ENVIO
-          </p>
-          <p className="mt-2 font-mono text-[10px] tracking-[0.16em] text-muted">
+          <p className="mt-3 font-mono text-[10px] tracking-[0.16em] text-muted">
             <a
               href="https://instagram.com/mathiasmfernandes"
               className="hover:text-fg"
@@ -1406,6 +1364,24 @@ function Footer() {
             >
               @mathiasmfernandes
             </a>
+          </p>
+        </div>
+
+        <div>
+          <p className="font-mono text-[10px] tracking-[0.22em] text-dim">
+            AVISO
+          </p>
+          <p className="mt-4 max-w-md text-sm leading-relaxed text-muted">
+            Este dossiê é um material de treinamento exclusivamente educacional.
+            Seu conteúdo não apoia, não ensina nem autoriza qualquer prática
+            ilegal ou criminosa.
+          </p>
+          <p className="mt-3 max-w-md text-xs leading-relaxed text-dim">
+            Fraude eletrônica: Código Penal, art. 171, § 2º-A (Lei nº 14.155/2021).
+            Invasão: art. 154-A (Lei nº 12.737/2012).
+          </p>
+          <p className="mt-6 font-mono text-[10px] tracking-[0.16em] text-dim">
+            JOGO ONLINE · SEM CAIXA · SEM ENVIO
           </p>
         </div>
       </div>
