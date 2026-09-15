@@ -1,7 +1,5 @@
 import { medalById, type MedalId } from "@/lib/medals";
-import { cn } from "@/lib/utils";
-
-const EDGES = 16;
+import { assetUrl, cn } from "@/lib/utils";
 
 export function Medal({
   id,
@@ -15,37 +13,37 @@ export function Medal({
   spin?: boolean;
 }) {
   const m = medalById(id);
+  const label = earned
+    ? `Medalha ${m.series} ${m.vector}, caso concluído`
+    : `Medalha ${m.series} bloqueada`;
   return (
-    <div className={cn("medal-scene", size === "sm" && "medal-scene-sm")} aria-hidden={!earned}>
-      <div
-        className={cn(
-          "medal",
-          `medal-${id}`,
-          size === "sm" && "medal-sm",
-          earned && spin && "is-spin",
-          !earned && "is-locked",
-        )}
-      >
-        {Array.from({ length: EDGES }, (_, i) => (
-          <span
-            key={i}
-            className="medal-edge"
-            style={{ ["--a" as string]: `${i * (360 / EDGES)}deg` }}
+    <div
+      className={cn(
+        "op-medal",
+        size === "sm" && "op-medal-sm",
+        earned && spin && "is-award",
+        !earned && "is-locked",
+      )}
+      role="img"
+      aria-label={label}
+    >
+      <div className="op-ribbon" aria-hidden>
+        <span className="op-cross" />
+      </div>
+      <div className="op-scene">
+        <div className={cn("op-coin", earned && spin && "is-spin")}>
+          <img
+            src={assetUrl("medals/front.jpg")}
+            alt=""
+            className="op-face op-front"
+            draggable={false}
           />
-        ))}
-        <div className="medal-face medal-front">
-          <span className="medal-ring" />
-          <span className="medal-core">
-            <span className="medal-series">{m.series}</span>
-            <span className="medal-vector">{m.vector}</span>
-          </span>
-        </div>
-        <div className="medal-face medal-back">
-          <span className="medal-ring" />
-          <span className="medal-core">
-            <span className="medal-series">ARQUIVADO</span>
-            <span className="medal-vector">SOC</span>
-          </span>
+          <img
+            src={assetUrl("medals/back.jpg")}
+            alt=""
+            className="op-face op-back"
+            draggable={false}
+          />
         </div>
       </div>
     </div>
@@ -55,19 +53,26 @@ export function Medal({
 export function MedalAward({ id }: { id: MedalId }) {
   const m = medalById(id);
   return (
-    <div className="mb-8 flex flex-col items-center text-center">
+    <div className="mb-10 flex flex-col items-center text-center">
       <p className="font-mono text-[10px] tracking-[0.28em] text-accent">
-        MOEDA DO QUARTEL
+        CONQUISTA DESBLOQUEADA
       </p>
-      <div className="mt-5">
-        <Medal id={id} spin earned />
+      <div className="medal-drop mt-4">
+        <img
+          src={assetUrl("medals/hang.jpg")}
+          alt={`Medalha Operação Phishing. ${m.series} ${m.vector}. Caso concluído.`}
+          className="mx-auto h-auto w-[min(100%,280px)]"
+          draggable={false}
+        />
       </div>
-      <p className="mt-6 font-display text-2xl font-semibold tracking-tight">
-        Arquivo vencido
+      <p className="mt-2 font-mono text-[10px] tracking-[0.22em] text-accent">
+        {m.series} · {m.vector}
+      </p>
+      <p className="mt-4 font-display text-3xl font-semibold tracking-tight">
+        Caso concluído
       </p>
       <p className="mt-2 max-w-sm text-sm leading-relaxed text-muted">
-        {m.title}. A moeda fica no quartel — prova de que você leu o golpe,
-        não de que montou um.
+        {m.title}. A medalha entra no quartel. Conhecimento é a melhor defesa.
       </p>
     </div>
   );
@@ -87,9 +92,9 @@ export function MedalRack({
   return (
     <section className="mt-8 rounded-lg border border-border bg-bg-elevated px-4 py-5">
       <p className="font-mono text-[10px] tracking-[0.22em] text-dim">
-        MOEDAS CONQUISTADAS · {earned.length}/{ids.length}
+        CONQUISTAS · {earned.length}/{ids.length}
       </p>
-      <ul className="mt-4 flex flex-wrap items-end justify-center gap-6">
+      <ul className="mt-5 flex flex-wrap items-end justify-center gap-5">
         {ids.map((id) => {
           const on = earned.includes(id);
           const m = medalById(id);
