@@ -30,6 +30,7 @@ jobs:
             if [ -f "$f" ]; then mv "$f" /tmp/pages-pub/; fi
           done
           if [ -d assets ]; then mv assets /tmp/pages-pub/assets; fi
+          if [ -d g ]; then mv g /tmp/pages-pub/g; fi
       - run: npm ci
       - run: npm run build:pages
         env:

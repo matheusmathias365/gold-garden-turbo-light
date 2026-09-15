@@ -147,6 +147,10 @@ function authPopupPlugin(): Plugin {
 // AGENTS.md § "First scaffold".
 export default defineConfig(({ command, isPreview }) => ({
   base: process.env.GITHUB_PAGES === "true" ? "/gold-garden-turbo-light/" : "/",
+  build: {
+    // GitHub Pages (Jekyll) swallows a root /assets folder. Use /g on Pages.
+    assetsDir: process.env.GITHUB_PAGES === "true" ? "g" : "assets",
+  },
   server: {
     host: "0.0.0.0",
     port: 8080,

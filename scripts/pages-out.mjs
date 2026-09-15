@@ -11,6 +11,7 @@ if (!dir) {
 
 const htmlName = existsSync(join(dir, "index.html")) ? "index.html" : "_shell.html";
 let html = readFileSync(join(dir, htmlName), "utf8");
+html = html.replace(/\u0000/g, "");
 
 const assetsDir = join(dir, "assets");
 if (existsSync(assetsDir)) {
