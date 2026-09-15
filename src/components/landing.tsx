@@ -1335,26 +1335,74 @@ function CtaFinal({ reduce }: { reduce: boolean }) {
 }
 
 function Footer() {
+  const year = 2026;
   return (
-    <footer className="relative z-10 px-5 py-12">
-      <div className="mx-auto grid max-w-6xl gap-8 md:grid-cols-2">
-        <div className="space-y-3 text-xs leading-relaxed text-dim">
-          <p className="font-display text-lg font-semibold text-fg">
+    <footer className="relative z-10 border-t border-border/60 px-5 py-16">
+      <div className="mx-auto grid max-w-6xl gap-12 md:grid-cols-[1.3fr_0.9fr_0.9fr]">
+        <div>
+          <p className="font-display text-lg font-semibold tracking-tight text-fg">
             Operação <span className="text-accent">Phishing</span>
           </p>
-          <p className="text-muted">
-            Este dossiê é um material de treinamento exclusivamente educacional. Seu conteúdo não apoia, não ensina nem autoriza qualquer prática ilegal ou criminosa.
+          <p className="mt-2 font-mono text-[10px] tracking-[0.22em] text-dim">
+            SOBRE O PROJETO
           </p>
-          <p>
-            Fraude eletrônica: Código Penal, art. 171, § 2º-A (Lei nº 14.155/2021). Invasão: art. 154-A (Lei nº 12.737/2012).
+          <p className="mt-3 max-w-md text-sm leading-relaxed text-muted">
+            Jogo-treino de cibersegurança. Você reconhece a isca — SMS, e-mail,
+            PIX, QR, voz — sem montar golpe nenhum. Simulação. Não é órgão
+            oficial.
           </p>
-          <p>{CERT_LEGAL}</p>
+          <p className="mt-6 font-mono text-[10px] tracking-[0.16em] text-dim">
+            © {year} Operação Phishing · treino educacional
+          </p>
         </div>
-        <div className="space-y-2 font-mono text-[10px] tracking-[0.16em] text-dim md:text-right">
-          <p>JOGO ONLINE · SEM CAIXA · SEM ENVIO</p>
-          <p>SIMULAÇÃO · NÃO É ÓRGÃO OFICIAL</p>
-          <p>PULAR INTRO EXISTE NO JOGO</p>
-          <p>@mathiasmfernandes</p>
+
+        <nav aria-label="Âncoras do site">
+          <p className="font-mono text-[10px] tracking-[0.22em] text-dim">
+            NO SITE
+          </p>
+          <ul className="mt-4 space-y-2 font-mono text-[11px] tracking-[0.14em] text-muted">
+            <li><a href="#inicio" className="inline-flex min-h-11 items-center hover:text-fg">Início</a></li>
+            <li><a href="#golpe" className="inline-flex min-h-11 items-center hover:text-fg">O golpe</a></li>
+            <li><a href="#casos" className="inline-flex min-h-11 items-center hover:text-fg">Casos</a></li>
+            <li><a href="#lacre" className="inline-flex min-h-11 items-center hover:text-fg">Classificado</a></li>
+            <li><a href="#como" className="inline-flex min-h-11 items-center hover:text-fg">Como jogar</a></li>
+            <li><a href="#saber" className="inline-flex min-h-11 items-center hover:text-fg">Phishing</a></li>
+            <li><a href="#faq" className="inline-flex min-h-11 items-center hover:text-fg">FAQ</a></li>
+            <li><a href="#certificado" className="inline-flex min-h-11 items-center hover:text-fg">Certificado</a></li>
+            <li>
+              <Link to="/jogar" className="inline-flex min-h-11 items-center text-accent hover:text-fg">
+                Jogar agora
+              </Link>
+            </li>
+          </ul>
+        </nav>
+
+        <div>
+          <p className="font-mono text-[10px] tracking-[0.22em] text-dim">
+            AVISO
+          </p>
+          <p className="mt-4 text-xs leading-relaxed text-dim">
+            Este dossiê é um material de treinamento exclusivamente educacional.
+            Seu conteúdo não apoia, não ensina nem autoriza qualquer prática
+            ilegal ou criminosa.
+          </p>
+          <p className="mt-3 text-xs leading-relaxed text-dim">
+            Fraude eletrônica: Código Penal, art. 171, § 2º-A (Lei nº 14.155/2021).
+            Invasão: art. 154-A (Lei nº 12.737/2012).
+          </p>
+          <p className="mt-4 font-mono text-[10px] tracking-[0.16em] text-muted">
+            JOGO ONLINE · SEM CAIXA · SEM ENVIO
+          </p>
+          <p className="mt-2 font-mono text-[10px] tracking-[0.16em] text-muted">
+            <a
+              href="https://instagram.com/mathiasmfernandes"
+              className="hover:text-fg"
+              rel="noreferrer"
+              target="_blank"
+            >
+              @mathiasmfernandes
+            </a>
+          </p>
         </div>
       </div>
     </footer>
