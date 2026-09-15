@@ -1338,7 +1338,7 @@ function Footer() {
   const year = 2026;
   return (
     <footer className="relative z-10 border-t border-border/60 px-5 py-16">
-      <div className="mx-auto grid max-w-6xl gap-12 md:grid-cols-[1.3fr_0.9fr_0.9fr]">
+      <div className="mx-auto grid max-w-6xl gap-12 md:grid-cols-[1.15fr_1.2fr_0.95fr]">
         <div>
           <p className="font-display text-lg font-semibold tracking-tight text-fg">
             Operação <span className="text-accent">Phishing</span>
@@ -1360,21 +1360,25 @@ function Footer() {
           <p className="font-mono text-[10px] tracking-[0.22em] text-dim">
             NO SITE
           </p>
-          <ul className="mt-4 space-y-2 font-mono text-[11px] tracking-[0.14em] text-muted">
-            <li><a href="#inicio" className="inline-flex min-h-11 items-center hover:text-fg">Início</a></li>
-            <li><a href="#golpe" className="inline-flex min-h-11 items-center hover:text-fg">O golpe</a></li>
-            <li><a href="#casos" className="inline-flex min-h-11 items-center hover:text-fg">Casos</a></li>
-            <li><a href="#lacre" className="inline-flex min-h-11 items-center hover:text-fg">Classificado</a></li>
-            <li><a href="#como" className="inline-flex min-h-11 items-center hover:text-fg">Como jogar</a></li>
-            <li><a href="#saber" className="inline-flex min-h-11 items-center hover:text-fg">Phishing</a></li>
-            <li><a href="#faq" className="inline-flex min-h-11 items-center hover:text-fg">FAQ</a></li>
-            <li><a href="#certificado" className="inline-flex min-h-11 items-center hover:text-fg">Certificado</a></li>
-            <li>
-              <Link to="/jogar" className="inline-flex min-h-11 items-center text-accent hover:text-fg">
-                Jogar agora
-              </Link>
-            </li>
-          </ul>
+          <div className="mt-4 grid grid-cols-2 gap-x-6">
+            <ul className="space-y-1 font-mono text-[11px] tracking-[0.14em] text-muted">
+              <li><a href="#inicio" className="inline-flex min-h-11 items-center hover:text-fg">Início</a></li>
+              <li><a href="#golpe" className="inline-flex min-h-11 items-center hover:text-fg">O golpe</a></li>
+              <li><a href="#casos" className="inline-flex min-h-11 items-center hover:text-fg">Casos</a></li>
+              <li><a href="#lacre" className="inline-flex min-h-11 items-center hover:text-fg">Classificado</a></li>
+              <li><a href="#como" className="inline-flex min-h-11 items-center hover:text-fg">Como jogar</a></li>
+            </ul>
+            <ul className="space-y-1 font-mono text-[11px] tracking-[0.14em] text-muted">
+              <li><a href="#saber" className="inline-flex min-h-11 items-center hover:text-fg">Phishing</a></li>
+              <li><a href="#faq" className="inline-flex min-h-11 items-center hover:text-fg">FAQ</a></li>
+              <li><a href="#certificado" className="inline-flex min-h-11 items-center hover:text-fg">Certificado</a></li>
+              <li>
+                <Link to="/jogar" className="inline-flex min-h-11 items-center text-accent hover:text-fg">
+                  Jogar agora
+                </Link>
+              </li>
+            </ul>
+          </div>
         </nav>
 
         <div>
