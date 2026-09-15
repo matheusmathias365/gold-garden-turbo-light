@@ -5,7 +5,6 @@ export function Medal({
   id,
   size = "lg",
   earned = true,
-  spin = false,
 }: {
   id: MedalId;
   size?: "lg" | "sm";
@@ -17,62 +16,36 @@ export function Medal({
     ? `Medalha ${m.series} ${m.vector}, caso concluído`
     : `Medalha ${m.series} bloqueada`;
   return (
-    <div
+    <img
+      src={assetUrl("medals/hang.png")}
+      alt={label}
+      draggable={false}
       className={cn(
-        "op-medal",
-        size === "sm" && "op-medal-sm",
-        earned && spin && "is-award",
-        !earned && "is-locked",
+        "h-auto select-none",
+        size === "sm" ? "w-16" : "w-44",
+        !earned && "opacity-35 grayscale",
       )}
-      role="img"
-      aria-label={label}
-    >
-      <div className="op-ribbon" aria-hidden>
-        <span className="op-cross" />
-      </div>
-      <div className="op-scene">
-        <div className={cn("op-coin", earned && spin && "is-spin")}>
-          <img
-            src={assetUrl("medals/front.jpg")}
-            alt=""
-            className="op-face op-front"
-            draggable={false}
-          />
-          <img
-            src={assetUrl("medals/back.jpg")}
-            alt=""
-            className="op-face op-back"
-            draggable={false}
-          />
-        </div>
-      </div>
-    </div>
+    />
   );
 }
 
 export function MedalAward({ id }: { id: MedalId }) {
   const m = medalById(id);
   return (
-    <div className="mb-10 flex flex-col items-center text-center">
-      <p className="font-mono text-[10px] tracking-[0.28em] text-accent">
+    <div className="relative isolate mb-10 overflow-hidden rounded-lg bg-bg px-5 py-12 text-center">
+      <p className="font-mono text-[10px] tracking-[0.32em] text-accent">
         CONQUISTA DESBLOQUEADA
       </p>
-      <div className="medal-drop mt-4">
+      <div className="medal-drop mx-auto mt-8 w-[min(100%,240px)]">
         <img
-          src={assetUrl("medals/hang.jpg")}
+          src={assetUrl("medals/hang.png")}
           alt={`Medalha Operação Phishing. ${m.series} ${m.vector}. Caso concluído.`}
-          className="mx-auto h-auto w-[min(100%,280px)]"
+          className="mx-auto h-auto w-full select-none"
           draggable={false}
         />
       </div>
-      <p className="mt-2 font-mono text-[10px] tracking-[0.22em] text-accent">
+      <p className="mt-8 font-mono text-[10px] tracking-[0.28em] text-accent">
         {m.series} · {m.vector}
-      </p>
-      <p className="mt-4 font-display text-3xl font-semibold tracking-tight">
-        Caso concluído
-      </p>
-      <p className="mt-2 max-w-sm text-sm leading-relaxed text-muted">
-        {m.title}. A medalha entra no quartel. Conhecimento é a melhor defesa.
       </p>
     </div>
   );
@@ -90,11 +63,11 @@ export function MedalRack({
     : ["001", "002", "003", "004"];
   if (earned.length === 0) return null;
   return (
-    <section className="mt-8 rounded-lg border border-border bg-bg-elevated px-4 py-5">
+    <section className="mt-8 overflow-hidden rounded-lg border border-border bg-bg px-4 py-6">
       <p className="font-mono text-[10px] tracking-[0.22em] text-dim">
         CONQUISTAS · {earned.length}/{ids.length}
       </p>
-      <ul className="mt-5 flex flex-wrap items-end justify-center gap-5">
+      <ul className="mt-5 flex flex-wrap items-end justify-center gap-6">
         {ids.map((id) => {
           const on = earned.includes(id);
           const m = medalById(id);
