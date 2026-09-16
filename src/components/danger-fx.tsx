@@ -5,49 +5,67 @@ import { cn } from "@/lib/utils";
 
 const GLYPHS = "01ABCDEFxyz$#@!?/\\<>*%ΞΔλ¥";
 
-type Glyph = { id: number; x: number; y: number; ch: string };
-
 export function RedGlyphTrail({ enabled }: { enabled: boolean }) {
-  const [glyphs, setGlyphs] = useState<Glyph[]>([]);
-  const id = useRef(0);
-  const last = useRef(0);
+  const layer = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!enabled) return;
     if (window.matchMedia("(pointer: coarse)").matches) return;
+    const root = layer.current;
+    if (!root) return;
+
+    let last = 0;
+    let scrolling = false;
+    let scrollT = 0;
+    let count = 0;
+
+    function onScroll() {
+      scrolling = true;
+      window.clearTimeout(scrollT);
+      scrollT = window.setTimeout(() => {
+        scrolling = false;
+      }, 120);
+    }
 
     function move(e: MouseEvent) {
+      if (scrolling) return;
       const now = performance.now();
-      if (now - last.current < 32) return;
-      last.current = now;
-      const g: Glyph = {
-        id: id.current++,
-        x: e.clientX + (Math.random() * 18 - 9),
-        y: e.clientY + (Math.random() * 18 - 9),
-        ch: GLYPHS[Math.floor(Math.random() * GLYPHS.length)] ?? "0",
-      };
-      setGlyphs((prev) => [...prev.slice(-36), g]);
+      if (now - last < 64) return;
+      last = now;
+      if (count >= 10) {
+        root.firstElementChild?.remove();
+        count -= 1;
+      }
+      const s = document.createElement("span");
+      s.className = "glyph-red absolute font-mono text-xs font-semibold text-danger";
+      s.textContent = GLYPHS[Math.floor(Math.random() * GLYPHS.length)] ?? "0";
+      s.style.left = `${e.clientX + (Math.random() * 18 - 9)}px`;
+      s.style.top = `${e.clientY + (Math.random() * 18 - 9)}px`;
+      root.appendChild(s);
+      count += 1;
       window.setTimeout(() => {
-        setGlyphs((prev) => prev.filter((x) => x.id !== g.id));
+        s.remove();
+        count -= 1;
       }, 700);
     }
+
     window.addEventListener("mousemove", move, { passive: true });
-    return () => window.removeEventListener("mousemove", move);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("mousemove", move);
+      window.removeEventListener("scroll", onScroll);
+      window.clearTimeout(scrollT);
+      root.replaceChildren();
+    };
   }, [enabled]);
 
   if (!enabled) return null;
   return (
-    <div className="pointer-events-none fixed inset-0 z-[25] overflow-hidden" aria-hidden>
-      {glyphs.map((g) => (
-        <span
-          key={g.id}
-          className="glyph-red absolute font-mono text-xs font-semibold text-danger"
-          style={{ left: g.x, top: g.y }}
-        >
-          {g.ch}
-        </span>
-      ))}
-    </div>
+    <div
+      ref={layer}
+      className="pointer-events-none fixed inset-0 z-[25] overflow-hidden"
+      aria-hidden
+    />
   );
 }
 

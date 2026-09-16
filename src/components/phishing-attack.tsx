@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 export type AttackStep =
@@ -32,21 +32,24 @@ const DUMP = [
 export function PhishingAttack({
   reduce,
   onStep,
+  paused = false,
 }: {
   reduce: boolean;
   onStep?: (step: AttackStep) => void;
+  paused?: boolean;
 }) {
   const [step, setStep] = useState<AttackStep>(reduce ? "ranked" : "notify");
   const [dumpN, setDumpN] = useState(0);
   const [clock, setClock] = useState(10 * 60);
+  const beatRef = useRef(0);
 
   useEffect(() => {
     onStep?.(step);
   }, [step, onStep]);
 
   useEffect(() => {
-    if (reduce) return;
-    let i = 0;
+    if (reduce || paused) return;
+    let i = beatRef.current;
     let timer: number;
     const play = () => {
       const beat = BEATS[i];
@@ -56,30 +59,31 @@ export function PhishingAttack({
       if (beat.step === "sms") setClock(10 * 60);
       timer = window.setTimeout(() => {
         i = (i + 1) % BEATS.length;
+        beatRef.current = i;
         play();
       }, beat.ms);
     };
     play();
     return () => window.clearTimeout(timer);
-  }, [reduce]);
+  }, [reduce, paused]);
 
   useEffect(() => {
-    if (reduce || step !== "dump") return;
+    if (reduce || paused || step !== "dump") return;
     setDumpN(1);
     const t = window.setInterval(() => {
       setDumpN((n) => (n >= DUMP.length ? n : n + 1));
     }, 280);
     return () => window.clearInterval(t);
-  }, [step, reduce]);
+  }, [step, reduce, paused]);
 
   useEffect(() => {
     const live = step === "sms" || step === "cursor" || step === "click";
-    if (reduce || !live) return;
+    if (reduce || paused || !live) return;
     const t = window.setInterval(() => {
       setClock((c) => Math.max(0, c - 1));
-    }, 80);
+    }, 1000);
     return () => window.clearInterval(t);
-  }, [step, reduce]);
+  }, [step, reduce, paused]);
 
   const showSms = step === "sms" || step === "cursor" || step === "click";
   const red = step === "click" || step === "dump" || step === "ranked";

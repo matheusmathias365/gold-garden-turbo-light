@@ -67,7 +67,7 @@ export function Landing() {
 
 function Nav() {
   return (
-    <header className="sticky top-0 z-40 border-b border-border/70 bg-bg/75 backdrop-blur-md">
+    <header className="sticky top-0 z-40 border-b border-border/70 bg-bg/92 md:bg-bg/80 md:backdrop-blur-sm">
       <div className="mx-auto flex max-w-6xl items-center gap-4 px-5 py-3">
         <a href="#inicio" className="inline-flex min-h-11 items-center font-display text-sm font-semibold tracking-tight">
           Operação <span className="text-accent">Phishing</span>
@@ -106,9 +106,22 @@ function TickerLand() {
 function Hero({ reduce }: { reduce: boolean }) {
   const [step, setStep] = useState<AttackStep>("notify");
   const [titleHot, setTitleHot] = useState(false);
+  const [phoneOn, setPhoneOn] = useState(true);
+  const phoneRef = useRef<HTMLDivElement>(null);
   const onStep = useCallback((s: AttackStep) => setStep(s), []);
   const hot = step === "click" || step === "dump" || step === "ranked";
   const safe = step === "soc";
+
+  useEffect(() => {
+    const el = phoneRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([e]) => setPhoneOn(e.isIntersecting),
+      { threshold: 0.15, rootMargin: "80px" },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   return (
     <section id="inicio" className="relative min-h-[calc(100dvh-96px)] overflow-hidden">
@@ -183,7 +196,7 @@ function Hero({ reduce }: { reduce: boolean }) {
           </p>
         </div>
 
-        <div className="relative mx-auto w-full max-w-[340px] lg:max-w-[380px]">
+        <div ref={phoneRef} className="relative mx-auto w-full max-w-[340px] lg:max-w-[380px]">
           <Satellite className="satellite -left-28 top-16 hidden lg:block">
             <p className="font-mono text-[9px] tracking-[0.18em] text-danger">E-MAIL</p>
             <p className="mt-1 text-xs">Encomenda retida — taxa R$ 2,90</p>
@@ -195,7 +208,7 @@ function Hero({ reduce }: { reduce: boolean }) {
           </Satellite>
           <div className={cn(!reduce && "phone-in")}>
             <PhoneChrome>
-              <PhishingAttack reduce={reduce} onStep={onStep} />
+              <PhishingAttack reduce={reduce} paused={!phoneOn} onStep={onStep} />
             </PhoneChrome>
           </div>
           <p className="mt-4 text-center font-mono text-[10px] tracking-[0.16em] text-dim">
@@ -218,12 +231,13 @@ function Teaser({ reduce }: { reduce: boolean }) {
     const io = new IntersectionObserver(
       ([e]) => {
         if (e.isIntersecting) {
+          v.preload = "auto";
           v.play().catch(() => setNeedPlay(true));
         } else {
           v.pause();
         }
       },
-      { threshold: 0.4 },
+      { threshold: 0.35, rootMargin: "120px" },
     );
     io.observe(v);
     return () => io.disconnect();
@@ -259,7 +273,7 @@ function Teaser({ reduce }: { reduce: boolean }) {
             muted={muted}
             loop
             playsInline
-            preload="metadata"
+            preload="none"
             poster={assetUrl("teaser.jpg")}
             controls={needPlay}
             aria-label="Teaser Operação Phishing. Simulação. Ninguém é atingido."
@@ -445,7 +459,7 @@ function Metodo() {
 
 function Golpe({ reduce }: { reduce: boolean }) {
   return (
-    <section id="golpe" className="land-section">
+    <section id="golpe" className="land-section is-sticky-host">
       <div className="mx-auto max-w-6xl px-5 py-16 md:py-24">
         <p className="font-mono text-[10px] tracking-[0.22em] text-accent">A INTRO</p>
         <h2 className="mt-3 max-w-3xl font-display text-4xl font-semibold tracking-tight md:text-6xl">
@@ -645,7 +659,7 @@ function Frase({ reduce }: { reduce: boolean }) {
 
 function Pistas({ reduce }: { reduce: boolean }) {
   return (
-    <section id="pistas" className="land-section">
+    <section id="pistas" className="land-section is-sticky-host">
       <div className="mx-auto max-w-6xl px-5 py-16 md:py-24">
         <p className="font-mono text-[10px] tracking-[0.22em] text-accent">CINCO MARCAS</p>
         <h2 className="mt-3 font-display text-4xl font-semibold tracking-tight md:text-6xl">
@@ -848,21 +862,26 @@ function Dossie() {
   const ids = ["cap-1", "cap-2", "cap-3", "cap-4"];
 
   useEffect(() => {
+    let raf = 0;
     function spy() {
-      if (hold.current) return;
-      const line = window.innerHeight * 0.34;
-      let best = 0;
-      let bestTop = -Infinity;
-      ids.forEach((id, i) => {
-        const el = document.getElementById(id);
-        if (!el) return;
-        const top = el.getBoundingClientRect().top;
-        if (top <= line && top > bestTop) {
-          bestTop = top;
-          best = i;
-        }
+      if (raf) return;
+      raf = window.requestAnimationFrame(() => {
+        raf = 0;
+        if (hold.current) return;
+        const line = window.innerHeight * 0.34;
+        let best = 0;
+        let bestTop = -Infinity;
+        ids.forEach((id, i) => {
+          const el = document.getElementById(id);
+          if (!el) return;
+          const top = el.getBoundingClientRect().top;
+          if (top <= line && top > bestTop) {
+            bestTop = top;
+            best = i;
+          }
+        });
+        setActive((cur) => (cur === best ? cur : best));
       });
-      setActive((cur) => (cur === best ? cur : best));
     }
     function release() {
       hold.current = false;
@@ -875,6 +894,7 @@ function Dossie() {
       window.removeEventListener("scroll", spy);
       window.removeEventListener("wheel", release);
       window.removeEventListener("touchmove", release);
+      if (raf) window.cancelAnimationFrame(raf);
     };
   }, []);
 
