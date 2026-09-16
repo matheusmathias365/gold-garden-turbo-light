@@ -483,10 +483,44 @@ p {
     0 0 18px rgb(229 72 77 / 0.28);
 }
 .title-fail .hahaha-fx {
+  animation: none;
+}
+.title-fail.is-hot .hahaha-fx {
   animation: title-fail-jitter 1.8s steps(2) infinite;
 }
 .title-fail .hahaha-ch {
   min-width: 0;
+  animation: none;
+}
+.title-fail.is-hot .hahaha-ch {
+  animation: hahaha-ch 260ms steps(2) infinite;
+}
+.title-fail .hahaha-fx::after {
+  display: none;
+}
+.title-fail.is-hot .hahaha-fx::after {
+  display: block;
+}
+.title-fail .hahaha-rgb-c,
+.title-fail .hahaha-rgb-m {
+  animation: none;
+  clip-path: none;
+}
+.title-fail .hahaha-rgb-c {
+  transform: translate(-3px, 0);
+  opacity: 0.55;
+}
+.title-fail .hahaha-rgb-m {
+  transform: translate(3px, 0);
+  opacity: 0.42;
+}
+.title-fail.is-hot .hahaha-rgb-c {
+  animation: hahaha-rgb-c 1.05s steps(2) infinite;
+  opacity: 0.72;
+}
+.title-fail.is-hot .hahaha-rgb-m {
+  animation: hahaha-rgb-m 0.82s steps(3) infinite;
+  opacity: 0.72;
 }
 @keyframes title-fail-jitter {
   0%,
@@ -502,7 +536,6 @@ p {
 }
 .title-fail .hahaha-rgb {
   justify-content: flex-start;
-  opacity: 0.38;
   overflow: hidden;
 }
 .title-fail .hahaha-word {

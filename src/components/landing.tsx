@@ -106,22 +106,9 @@ function TickerLand() {
 function Hero({ reduce }: { reduce: boolean }) {
   const [step, setStep] = useState<AttackStep>("notify");
   const [titleHot, setTitleHot] = useState(false);
-  const hoverRef = useRef(false);
   const onStep = useCallback((s: AttackStep) => setStep(s), []);
   const hot = step === "click" || step === "dump" || step === "ranked";
   const safe = step === "soc";
-
-  useEffect(() => {
-    if (reduce) return;
-    const id = window.setInterval(() => {
-      if (hoverRef.current) return;
-      setTitleHot(true);
-      window.setTimeout(() => {
-        if (!hoverRef.current) setTitleHot(false);
-      }, 640);
-    }, 4200);
-    return () => window.clearInterval(id);
-  }, [reduce]);
 
   return (
     <section id="inicio" className="relative min-h-[calc(100dvh-96px)] overflow-hidden">
@@ -145,14 +132,8 @@ function Hero({ reduce }: { reduce: boolean }) {
           </p>
           <h1
             className="mt-5 flex flex-col items-start font-display text-6xl font-semibold leading-none tracking-tight md:text-8xl"
-            onMouseEnter={() => {
-              hoverRef.current = true;
-              setTitleHot(true);
-            }}
-            onMouseLeave={() => {
-              hoverRef.current = false;
-              setTitleHot(false);
-            }}
+            onMouseEnter={() => setTitleHot(true)}
+            onMouseLeave={() => setTitleHot(false)}
           >
             <span className="block">
               <FailWord text="Operação" reduce={reduce} hot={titleHot} align="start" tone="fg" />

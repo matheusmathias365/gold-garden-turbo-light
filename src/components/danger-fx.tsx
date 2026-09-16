@@ -141,8 +141,8 @@ export function FailWord({
   const [tick, setTick] = useState(0);
 
   useEffect(() => {
-    if (reduce) return;
-    const id = window.setInterval(() => setTick((n) => n + 1), hot ? 95 : 160);
+    if (reduce || !hot) return;
+    const id = window.setInterval(() => setTick((n) => n + 1), 95);
     return () => window.clearInterval(id);
   }, [reduce, hot]);
 
@@ -158,6 +158,7 @@ export function FailWord({
       className={cn(
         "hahaha-fail",
         align === "start" && "title-fail",
+        hot && "is-hot",
         tone === "accent" && "title-fail-accent",
         tone === "fg" && "title-fail-fg",
         className,
