@@ -368,6 +368,7 @@ p {
 .hahaha-fail {
   position: relative;
   display: inline-block;
+  contain: layout style;
   font-kerning: none;
   font-synthesis: none;
   letter-spacing: 0.04em;
@@ -376,6 +377,18 @@ p {
     -2px 0 #1ee0ff,
     2px 0 #ff2a2a,
     0 0 28px rgb(229 72 77 / 0.55);
+}
+.hahaha-slot {
+  visibility: hidden;
+  display: block;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.hahaha-fx {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
   animation: hahaha-jitter 90ms steps(2) infinite;
 }
 .hahaha-word {
@@ -384,10 +397,23 @@ p {
   display: inline-flex;
   align-items: baseline;
   justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+.hahaha-cell {
+  position: relative;
+  display: inline-block;
+}
+.hahaha-cell-slot {
+  visibility: hidden;
+  display: block;
 }
 .hahaha-ch {
-  display: inline-block;
-  min-width: 0.55em;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
   transform-origin: 50% 70%;
   animation: hahaha-ch 260ms steps(2) infinite;
 }
@@ -432,7 +458,7 @@ p {
   color: #ff2a2a;
   animation: hahaha-rgb-m 0.82s steps(3) infinite;
 }
-.hahaha-fail::after {
+.hahaha-fx::after {
   content: "";
   position: absolute;
   left: -10%;
@@ -451,11 +477,13 @@ p {
   overflow: hidden;
   line-height: 1.02;
   padding-bottom: 0.08em;
-  animation: title-fail-jitter 1.8s steps(2) infinite;
   text-shadow:
     -1px 0 #1ee0ff,
     1px 0 rgb(229 72 77 / 0.7),
     0 0 18px rgb(229 72 77 / 0.28);
+}
+.title-fail .hahaha-fx {
+  animation: title-fail-jitter 1.8s steps(2) infinite;
 }
 .title-fail .hahaha-ch {
   min-width: 0;
@@ -487,7 +515,7 @@ p {
     1px 0 #3dcf7a,
     0 0 22px rgb(61 207 122 / 0.45);
 }
-.title-fail-accent::after {
+.title-fail-accent .hahaha-fx::after {
   background: rgb(61 207 122 / 0.28);
 }
 .title-fail-fg {
@@ -496,7 +524,7 @@ p {
     1px 0 rgb(215 239 224 / 0.35),
     0 0 16px rgb(61 207 122 / 0.18);
 }
-.title-fail-fg::after {
+.title-fail-fg .hahaha-fx::after {
   background: rgb(229 72 77 / 0.22);
 }
 @keyframes hahaha-jitter {

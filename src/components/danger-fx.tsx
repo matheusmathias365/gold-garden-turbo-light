@@ -93,6 +93,7 @@ const LOOKALIKES: Record<string, string[]> = {
 };
 
 type FailCh = {
+  raw: string;
   ch: string;
   face: string;
   scaleY: number;
@@ -110,6 +111,7 @@ function wordFrame(text: string, tick: number, hot: boolean): FailCh[] {
     const corrupt = hot && (tick + i) % 3 !== 1;
     const pick = pool[(tick + i * 2) % pool.length] ?? raw;
     return {
+      raw,
       ch: corrupt ? pick : raw,
       face: corrupt ? (FACE[(tick + i * 2) % FACE.length] ?? FACE[0]!) : brand,
       scaleY: corrupt ? 0.72 + ((tick + i * 5) % 6) * 0.1 : 1,
@@ -161,28 +163,31 @@ export function FailWord({
         className,
       )}
       aria-label={text}
-      data-text={frame}
+      data-text={text}
     >
-      <span className="hahaha-rgb hahaha-rgb-c" aria-hidden>
-        {frame}
+      <span className="hahaha-slot" aria-hidden>
+        {text}
       </span>
-      <span className="hahaha-rgb hahaha-rgb-m" aria-hidden>
-        {frame}
-      </span>
-      <span className="hahaha-word">
-        {letters.map((l, i) => (
-          <span
-            key={`${text}-${i}`}
-            className="hahaha-ch"
-            style={{
-              fontFamily: l.face,
-              fontWeight: l.weight,
-              transform: `translateY(${l.y}px) skewX(${l.skew}deg) rotate(${l.rotate}deg) scaleY(${l.scaleY})`,
-            }}
-          >
-            {l.ch}
-          </span>
-        ))}
+      <span className="hahaha-fx" aria-hidden>
+        <span className="hahaha-rgb hahaha-rgb-c">{frame}</span>
+        <span className="hahaha-rgb hahaha-rgb-m">{frame}</span>
+        <span className="hahaha-word">
+          {letters.map((l, i) => (
+            <span key={`${text}-${i}`} className="hahaha-cell">
+              <span className="hahaha-cell-slot">{l.raw}</span>
+              <span
+                className="hahaha-ch"
+                style={{
+                  fontFamily: l.face,
+                  fontWeight: l.weight,
+                  transform: `translateY(${l.y}px) skewX(${l.skew}deg) rotate(${l.rotate}deg) scaleY(${l.scaleY})`,
+                }}
+              >
+                {l.ch}
+              </span>
+            </span>
+          ))}
+        </span>
       </span>
     </span>
   );
