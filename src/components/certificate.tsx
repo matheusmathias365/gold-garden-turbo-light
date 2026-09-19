@@ -30,15 +30,8 @@ export function AgentCertificate({
   blurb?: string;
 }) {
   const name = sanitizeCallsign(callsign) || "AGENTE";
-  const issued = issuedAt ?? new Date().toISOString();
+  const issued = issuedAt;
   const serial = certSerial(name, series);
-  const payload = {
-    callsign: name,
-    issuedAt: issued,
-    serial,
-    caseCode,
-    blurb,
-  };
   const [busy, setBusy] = useState(false);
   const [canShare, setCanShare] = useState(false);
   const [preview, setPreview] = useState<string | null>(null);
@@ -58,10 +51,16 @@ export function AgentCertificate({
   }, []);
 
   useEffect(() => {
+    if (!ready || !issued) {
+      blobRef.current = null;
+      setPreview(null);
+      return;
+    }
     let dead = false;
     let url = "";
     blobRef.current = null;
     setPreview(null);
+    const payload = { callsign: name, issuedAt: issued, serial, caseCode, blurb };
     void renderCertificatePng(payload).then((blob) => {
       if (dead) return;
       blobRef.current = blob;
@@ -72,26 +71,51 @@ export function AgentCertificate({
       dead = true;
       if (url) URL.revokeObjectURL(url);
     };
-    // payload fields, not the object
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [name, issued, serial, caseCode, blurb]);
+  }, [ready, name, issued, serial, caseCode, blurb]);
 
   async function save() {
+    if (!issued) return;
     setBusy(true);
     try {
-      await downloadCertificate(payload, blobRef.current ?? undefined);
+      await downloadCertificate(
+        { callsign: name, issuedAt: issued, serial, caseCode, blurb },
+        blobRef.current ?? undefined,
+      );
     } finally {
       setBusy(false);
     }
   }
 
   async function share() {
+    if (!issued) return;
     setBusy(true);
     try {
-      await shareCertificate(payload, blobRef.current ?? undefined);
+      await shareCertificate(
+        { callsign: name, issuedAt: issued, serial, caseCode, blurb },
+        blobRef.current ?? undefined,
+      );
     } finally {
       setBusy(false);
     }
+  }
+
+  if (!ready) {
+    return (
+      <div
+        className="mx-auto flex max-w-[420px] flex-col items-center rounded-lg border border-border bg-bg-elevated px-6 py-10 text-center shadow-panel"
+        role="status"
+      >
+        <Lock className="size-6 text-accent" strokeWidth={1.75} />
+        <p className="mt-3 font-display text-xl font-semibold">
+          Certificado bloqueado
+        </p>
+        <p className="mt-2 max-w-xs text-sm text-muted">
+          O nome <span className="text-fg">{name}</span> já está na ficha.
+          Falta{remaining === 1 ? "" : "m"} {remaining} arquivo
+          {remaining === 1 ? "" : "s"} — o diploma só sai com o caso arquivado.
+        </p>
+      </div>
+    );
   }
 
   return (
@@ -99,7 +123,7 @@ export function AgentCertificate({
       <div
         className={cn(
           "relative mx-auto max-w-[420px] overflow-hidden rounded-lg border bg-bg-elevated shadow-panel",
-          ready ? "border-accent/50" : "border-border",
+          "border-accent/50",
         )}
       >
         {preview ? (
@@ -113,43 +137,27 @@ export function AgentCertificate({
             MONTANDO DIPLOMA…
           </div>
         )}
-        {!ready ? (
-          <div className="absolute inset-0 flex flex-col items-center justify-center bg-bg/80 px-6 text-center backdrop-blur-[2px]">
-            <Lock className="size-6 text-accent" strokeWidth={1.75} />
-            <p className="mt-3 font-display text-xl font-semibold">
-              Certificado bloqueado
-            </p>
-            <p className="mt-2 max-w-xs text-sm text-muted">
-              O nome <span className="text-fg">{name}</span> já está na ficha.
-              Faltam {remaining} arquivo{remaining === 1 ? "" : "s"} para emitir.
-            </p>
-          </div>
-        ) : null}
       </div>
 
-      {ready ? (
-        <div className="mt-4 flex flex-wrap justify-center gap-3">
-          <Btn onClick={() => void save()} disabled={busy || !preview}>
-            <Download className="size-4" />
-            Baixar para o Stories
+      <div className="mt-4 flex flex-wrap justify-center gap-3">
+        <Btn onClick={() => void save()} disabled={busy || !preview}>
+          <Download className="size-4" />
+          Baixar para o Stories
+        </Btn>
+        {canShare ? (
+          <Btn
+            variant="ghost"
+            onClick={() => void share()}
+            disabled={busy || !preview}
+          >
+            <Share2 className="size-4" />
+            Compartilhar
           </Btn>
-          {canShare ? (
-            <Btn
-              variant="ghost"
-              onClick={() => void share()}
-              disabled={busy || !preview}
-            >
-              <Share2 className="size-4" />
-              Compartilhar
-            </Btn>
-          ) : null}
-        </div>
-      ) : null}
-      {ready ? (
-        <p className="mt-3 text-center text-xs text-muted">
-          A imagem da tela é a mesma do arquivo. Formato 9:16 — cola no Stories.
-        </p>
-      ) : null}
+        ) : null}
+      </div>
+      <p className="mt-3 text-center text-xs text-muted">
+        A imagem da tela é a mesma do arquivo. Formato 9:16 — cola no Stories.
+      </p>
     </div>
   );
 }

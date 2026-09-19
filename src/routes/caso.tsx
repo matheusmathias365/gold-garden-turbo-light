@@ -9,6 +9,8 @@ import {
   CHALLENGE_IDS,
   LAB_IDS,
   LESSON_IDS,
+  PROTOCOL_ID,
+  TERMINAL_ID,
   countDone,
 } from "@/lib/ids";
 import { LABS } from "@/lib/lab-data";
@@ -23,6 +25,46 @@ export const Route = createFileRoute("/caso")({
   ),
 });
 
+type Gap = {
+  label: string;
+  to: "/briefing" | "/lab" | "/lab/$id" | "/desafios" | "/protocolo";
+  id?: string;
+};
+
+function gapsIn001(completed: string[]): Gap[] {
+  const gaps: Gap[] = [];
+  for (const lesson of LESSONS) {
+    if (!completed.includes(lesson.id)) {
+      gaps.push({ label: `${lesson.code} · ${lesson.title}`, to: "/briefing" });
+    }
+  }
+  for (const lab of LABS) {
+    if (!completed.includes(lab.id)) {
+      gaps.push({
+        label: `${lab.code} · ${lab.title}`,
+        to: "/lab/$id",
+        id: lab.id,
+      });
+    }
+  }
+  if (!completed.includes(TERMINAL_ID)) {
+    gaps.push({
+      label: "CASO F · Terminal SOC",
+      to: "/lab/$id",
+      id: TERMINAL_ID,
+    });
+  }
+  for (const ch of CHALLENGES) {
+    if (!completed.includes(ch.id)) {
+      gaps.push({ label: `${ch.code} · ${ch.title}`, to: "/desafios" });
+    }
+  }
+  if (!completed.includes(PROTOCOL_ID)) {
+    gaps.push({ label: "Protocolo · E se eu cliquei?", to: "/protocolo" });
+  }
+  return gaps;
+}
+
 function Caso() {
   const callsign = useProgress((s) => s.callsign);
   const completed = useProgress((s) => s.completed);
@@ -32,6 +74,9 @@ function Caso() {
   const total = countDone(completed, ALL_IDS);
   const remaining = ALL_IDS.length - total;
   const ready = remaining === 0;
+  const gaps = ready ? [] : gapsIn001(completed);
+  const next = gaps[0];
+  const labsDone = countDone(completed, LAB_IDS);
   const quiz = CHALLENGE_IDS.reduce(
     (acc, id) => {
       const s = scores[id];
@@ -68,6 +113,24 @@ function Caso() {
         />
       </div>
 
+      {!ready && gaps.length ? (
+        <div className="mx-auto mt-6 max-w-[420px] rounded-lg border border-danger/40 bg-surface px-4 py-4">
+          <p className="font-mono text-[10px] tracking-[0.2em] text-danger">
+            AINDA FALTA ARQUIVAR
+          </p>
+          <ul className="mt-3 space-y-2">
+            {gaps.map((g) => (
+              <li key={g.label} className="text-sm text-fg">
+                {g.label}
+              </li>
+            ))}
+          </ul>
+          <p className="mt-3 text-xs leading-relaxed text-muted">
+            Marcar pista não fecha o caso. Sem arquivar, o certificado não sai.
+          </p>
+        </div>
+      ) : null}
+
       <FilePanel
         code="FICHA DO AGENTE"
         title={callsign || "AGENTE"}
@@ -84,15 +147,27 @@ function Caso() {
           </div>
         )}
         <dl className="grid max-w-md gap-3 text-sm">
-          <Row label="Briefing" value={`${countDone(completed, LESSON_IDS)}/${LESSONS.length}`} />
-          <Row label="Laboratório" value={`${countDone(completed, LAB_IDS)}/${LABS.length + 1}`} />
+          <Row
+            label="Briefing"
+            value={`${countDone(completed, LESSON_IDS)}/${LESSONS.length}`}
+          />
+          <Row
+            label="Laboratório"
+            value={
+              labsDone === LAB_IDS.length
+                ? `${labsDone}/${LAB_IDS.length}`
+                : `${labsDone}/${LAB_IDS.length} · falta ${LAB_IDS.length - labsDone}`
+            }
+            warn={labsDone < LAB_IDS.length}
+          />
           <Row
             label="Desafios"
             value={`${countDone(completed, CHALLENGE_IDS)}/${CHALLENGES.length}`}
           />
           <Row
             label="Protocolo"
-            value={completed.includes("protocol") ? "catalogado" : "pendente"}
+            value={completed.includes(PROTOCOL_ID) ? "catalogado" : "pendente"}
+            warn={!completed.includes(PROTOCOL_ID)}
           />
           <Row
             label="Acertos"
@@ -112,21 +187,43 @@ function Caso() {
         <Link to="/jogar">
           <Btn variant="ghost">Quartel-general</Btn>
         </Link>
-        {!ready ? (
-          <Link to="/briefing">
-            <Btn>Continuar dossiê</Btn>
-          </Link>
+        {!ready && next ? (
+          next.to === "/lab/$id" && next.id ? (
+            <Link to="/lab/$id" params={{ id: next.id }}>
+              <Btn>Abrir {next.label}</Btn>
+            </Link>
+          ) : (
+            <Link to={next.to === "/lab/$id" ? "/lab" : next.to}>
+              <Btn>Continuar dossiê</Btn>
+            </Link>
+          )
         ) : null}
       </div>
     </div>
   );
 }
 
-function Row({ label, value }: { label: string; value: string }) {
+function Row({
+  label,
+  value,
+  warn,
+}: {
+  label: string;
+  value: string;
+  warn?: boolean;
+}) {
   return (
     <div className="flex items-baseline justify-between gap-4 border-b border-border py-2">
       <dt className="font-mono text-[10px] tracking-[0.18em] text-dim">{label}</dt>
-      <dd className="font-mono text-sm tabular-nums text-fg">{value}</dd>
+      <dd
+        className={
+          warn
+            ? "font-mono text-sm tabular-nums text-danger"
+            : "font-mono text-sm tabular-nums text-fg"
+        }
+      >
+        {value}
+      </dd>
     </div>
   );
 }
