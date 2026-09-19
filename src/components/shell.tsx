@@ -22,9 +22,10 @@ export function Splash({ label = "SINCRONIZANDO ARQUIVO" }: { label?: string }) 
 export function CrtFrame({ children }: { children: ReactNode }) {
   return (
     <div className="relative min-h-dvh bg-bg text-fg">
-      <div className="grid-bg pointer-events-none absolute inset-0 opacity-50" />
-      <div className="vignette pointer-events-none absolute inset-0" />
-      <div className="crt-scanlines pointer-events-none absolute inset-0 z-40 opacity-30" />
+      {/* Viewport only — never stretch over the tall diploma (that froze /caso). */}
+      <div className="grid-bg pointer-events-none fixed inset-0 opacity-50" />
+      <div className="vignette pointer-events-none fixed inset-0" />
+      <div className="crt-scanlines pointer-events-none fixed inset-0 z-[15] opacity-30" />
       <div className="relative z-10">{children}</div>
     </div>
   );
